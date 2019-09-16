@@ -1,0 +1,22 @@
+version: "3.6"
+
+services:
+
+  tag-service:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+
+
+  tag-db:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        delay: 5s
+        max_attempts: 3
+        window: 120s
