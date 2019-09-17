@@ -10,5 +10,5 @@ import io.archilab.prox.tagservice.tag.Tag;
 
 @RepositoryRestResource(exported = false)
 public interface TagCounterRepository extends CrudRepository<TagCounter, UUID> {
-  List<TagCounter> findByTag1OrTag2OrderByCountDesc(Tag tag1, Tag tag2);
+  List<TagCounter> findByTag1OrTag2(Tag tag1, Tag tag2);
 }

@@ -7,6 +7,7 @@ import javax.persistence.UniqueConstraint;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 
 import io.archilab.prox.tagservice.core.AbstractEntity;
+import io.archilab.prox.tagservice.tag.recommendation.TagCounter;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,5 +28,10 @@ public class Tag extends AbstractEntity {
 
   public Tag(TagName tagName) {
     this.tagName = tagName;
+  }
+
+  @Override
+  public int hashCode() {
+    return getId().hashCode();
   }
 }
