@@ -1,4 +1,4 @@
-package io.archilab.prox.tagservice.tags;
+package io.archilab.prox.tagservice.tag;
 
 import java.util.Optional;
 import java.util.Set;
@@ -8,8 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 
-
-@RepositoryRestResource(collectionResourceRel = "tags", path = "tags")
 public interface TagRepository extends PagingAndSortingRepository<Tag, UUID> {
 
   Optional<Tag> findByTagName_TagName(@Param(value = "tagName") String tagName);

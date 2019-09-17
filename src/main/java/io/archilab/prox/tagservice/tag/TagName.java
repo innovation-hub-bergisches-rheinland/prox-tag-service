@@ -1,4 +1,4 @@
-package io.archilab.prox.tagservice.tags;
+package io.archilab.prox.tagservice.tag;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

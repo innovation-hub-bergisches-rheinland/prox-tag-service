@@ -1,6 +1,6 @@
 package io.archilab.prox.tagservice.config;
 
-import io.archilab.prox.tagservice.tags.TagCounterUpdater;
+import io.archilab.prox.tagservice.tag.recommendation.TagCounterUpdater;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

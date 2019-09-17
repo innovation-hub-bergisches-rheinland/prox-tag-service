@@ -1,4 +1,4 @@
-package io.archilab.prox.tagservice.tags;
+package io.archilab.prox.tagservice.tag;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;

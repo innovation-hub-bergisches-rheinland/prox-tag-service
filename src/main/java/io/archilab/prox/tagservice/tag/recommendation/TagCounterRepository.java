@@ -1,9 +1,11 @@
-package io.archilab.prox.tagservice.tags;
+package io.archilab.prox.tagservice.tag.recommendation;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import java.util.List;
 import java.util.UUID;
+
+import io.archilab.prox.tagservice.tag.Tag;
 
 
 @RepositoryRestResource(exported = false)

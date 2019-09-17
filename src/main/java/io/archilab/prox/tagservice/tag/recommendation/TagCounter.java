@@ -1,8 +1,9 @@
-package io.archilab.prox.tagservice.tags;
+package io.archilab.prox.tagservice.tag.recommendation;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import io.archilab.prox.tagservice.core.AbstractEntity;
+import io.archilab.prox.tagservice.tag.Tag;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
