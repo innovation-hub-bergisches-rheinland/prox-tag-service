@@ -1,6 +1,7 @@
 package io.archilab.prox.tagservice.tag.recommendation;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
@@ -34,6 +35,13 @@ public class TagRecommendationController {
   @Autowired
   private TagRepository tagRepository;
 
+  private final int resultCount;
+
+
+  @Autowired
+  public TagRecommendationController(@Value("${tagRecommendationCalculation.resultCount}") int resultCount) {
+    this.resultCount = resultCount;
+  }
 
   @RequestMapping(path = "", method = RequestMethod.GET, produces = { "application/hal+json" })
   public ResponseEntity<Resources<Resource<Tag>>> tagRecommendations(@RequestParam("tags") UUID[] tagIds) {
@@ -84,11 +92,13 @@ public class TagRecommendationController {
       List<TagCounter> tagCounters = tagCounterRepository.findByTag1OrTag2(searchTag, searchTag);
       for (TagCounter tagCounter : tagCounters) {
         Tag otherTag = tagCounter.getOtherTag(searchTag);
-        Integer count = recommendedTags.get(otherTag);
-        if (count == null) {
-          recommendedTags.put(otherTag, tagCounter.getCount());
-        } else {
-          recommendedTags.put(otherTag, count + tagCounter.getCount());
+        if (!searchTags.contains(otherTag)) {
+          Integer count = recommendedTags.get(otherTag);
+          if (count == null) {
+            recommendedTags.put(otherTag, tagCounter.getCount());
+          } else {
+            recommendedTags.put(otherTag, count + tagCounter.getCount());
+          }
         }
       }
     }
@@ -103,8 +113,8 @@ public class TagRecommendationController {
     });
 
     List<Tag> returnedRecommendedTags = new ArrayList<>();
-    for (Entry<Tag, Integer> sortedRecommendedTag : sortedRecommendedTags) {
-      returnedRecommendedTags.add(sortedRecommendedTag.getKey());
+    for (int i = 0; i < resultCount && i < sortedRecommendedTags.size(); i++) {
+      returnedRecommendedTags.add(sortedRecommendedTags.get(i).getKey());
     }
     return returnedRecommendedTags;
   }

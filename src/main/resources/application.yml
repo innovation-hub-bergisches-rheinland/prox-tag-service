@@ -5,6 +5,7 @@ eureka:
 tagRecommendationCalculation:
   delay:
     seconds: 10
+  resultCount: 15
 keycloak:
   auth-server-url: https://login.archi-lab.io/auth
   bearer-only: true
