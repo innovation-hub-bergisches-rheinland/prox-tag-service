@@ -12,7 +12,7 @@ import lombok.Setter;
 @Data
 @Setter(AccessLevel.NONE)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TagName {
+public class TagName implements Comparable<TagName> {
 
   private static final int MAX_LENGTH = 40;
 
@@ -31,4 +31,8 @@ public class TagName {
     return tagName != null && tagName.length() <= TagName.MAX_LENGTH;
   }
 
+  @Override
+  public int compareTo(TagName o) {
+    return this.getTagName().compareTo(o.getTagName());
+  }
 }

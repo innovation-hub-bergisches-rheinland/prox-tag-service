@@ -2,9 +2,13 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://service-discovery:8761/eureka/
-tagRecommendationCalculation:
+tagCounter:
   delay:
-    seconds: 10
+    initial:
+       seconds: 10
+  minutes: 1
+
+tagRecommendationCalculation:
   resultCount: 15
 keycloak:
   auth-server-url: https://login.archi-lab.io/auth

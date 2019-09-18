@@ -1,5 +1,6 @@
 package io.archilab.prox.tagservice.tag;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,10 +26,16 @@ public class TagCollection {
   private UUID referencedEntity;
 
   @ManyToMany
-  private List<Tag> tagCollection;
+  private List<Tag> tagCollection = new ArrayList<>();
 
 
   public TagCollection(UUID referencedEntity) {
     this.referencedEntity = referencedEntity;
+  }
+
+  public void addTag(Tag tag)
+  {
+    if(!this.tagCollection.contains(tag))
+      this.tagCollection.add(tag);
   }
 }

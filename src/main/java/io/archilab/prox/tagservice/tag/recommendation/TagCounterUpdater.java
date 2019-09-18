@@ -1,77 +1,71 @@
 package io.archilab.prox.tagservice.tag.recommendation;
 
+import io.archilab.prox.tagservice.tag.Tag;
+import io.archilab.prox.tagservice.tag.TagCollection;
+import io.archilab.prox.tagservice.tag.TagCollectionRepository;
+import io.archilab.prox.tagservice.tag.recommendation.TagCounter;
+import io.archilab.prox.tagservice.tag.recommendation.TagCounterRepository;
+import lombok.NoArgsConstructor;
+import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import io.archilab.prox.tagservice.tag.Tag;
-
-
 @Transactional
 @Service
+@NoArgsConstructor
 public class TagCounterUpdater {
 
-  //@Autowired
-  //private ProjectRepository projectRepository;
+  @Autowired
+  private TagCollectionRepository tagCollectionRepository;
 
   @Autowired
   private TagCounterRepository tagCounterRepository;
 
-
-  public void updateTagCounter() { // TODO problems on parallel execution of different microservice replicas?
-    Map<TagCounter, TagCounter> tagCountersCache = new HashMap<>();
-
-    /*for (Project project : projectRepository.findAll()) {
-      Map<TagCounter, TagCounter> projectTagCounters =
-          getTagCounterForProjectTags(project.getTags());
-      for (TagCounter tagCounter : projectTagCounters.values()) {
-        TagCounter existingTagCounter = tagCountersCache.get(tagCounter);
-        if (existingTagCounter == null) {
-          tagCountersCache.put(tagCounter, tagCounter);
-        } else {
-          existingTagCounter.setCount(existingTagCounter.getCount() + 1);
-        }
-      }
-    }*/
-
-    saveTagCountersIntoRepository(tagCountersCache);
+  public TagCounterUpdater(TagCollectionRepository tagCollectionRepository, TagCounterRepository tagCounterRepository) {
+    this.tagCollectionRepository = tagCollectionRepository;
+    this.tagCounterRepository = tagCounterRepository;
   }
 
-  private Map<TagCounter, TagCounter> getTagCounterForProjectTags(List<Tag> projectTags) {
-    Map<TagCounter, TagCounter> tagCounters = new HashMap<>();
+  public void updateTagCounter() {
 
-    for (Tag projectTag1 : projectTags) {
-      for (Tag projectTag2 : projectTags) {
-        if (!projectTag1.equals(projectTag2)) {
-          TagCounter tagCounter = new TagCounter(projectTag1, projectTag2, 1);
-          if (tagCounters.get(tagCounter) == null) {
-            tagCounters.put(tagCounter, tagCounter);
+    Map<TagCounter, TagCounter> cache = new HashMap<>();
+
+    var collection = tagCollectionRepository.findAll();
+
+    for (TagCollection col : collection){
+
+      List<Tag> tags = col.getTagCollection();
+      Collections.sort(tags);
+
+      for (int i = 0; i < tags.size() - 1; i++){
+        for(int k = i + 1; k < tags.size(); k++)
+        {
+          var tag1 = tags.get(i);
+          var tag2 = tags.get(k);
+
+          var counter = new TagCounter(tag1, tag2, 1);
+
+          if(cache.containsKey(counter))
+          {
+            counter = cache.get(counter);
+            counter.setCount(counter.getCount() + 1);
+          }
+          else
+          {
+            cache.put(counter, counter);
           }
         }
       }
     }
 
-    return tagCounters;
-  }
+    this.tagCounterRepository.deleteAll();
 
-  private void saveTagCountersIntoRepository(Map<TagCounter, TagCounter> tagCountersCache) {
-    for (TagCounter tagCounter : tagCounterRepository.findAll()) {
-      TagCounter updatedTagCounter = tagCountersCache.get(tagCounter);
-      if (updatedTagCounter != null) {
-        tagCounter.setCount(updatedTagCounter.getCount());
-        tagCountersCache.remove(tagCounter);
-      } else {
-        tagCounter.setCount(0);
-      }
-      tagCounterRepository.save(tagCounter);
-    }
-
-    for (TagCounter tagCounter : tagCountersCache.values()) {
-      tagCounterRepository.save(tagCounter);
-    }
+    this.tagCounterRepository.saveAll(cache.values());
   }
 }

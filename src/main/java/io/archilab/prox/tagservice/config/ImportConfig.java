@@ -19,6 +19,7 @@ public class ImportConfig implements SchedulingConfigurer {
   @Autowired
   private Environment env;
 
+  private boolean initialStart = true;
 
   @Bean
   public Executor taskExecutor() {
@@ -33,13 +34,18 @@ public class ImportConfig implements SchedulingConfigurer {
   public void configureTasks(ScheduledTaskRegistrar taskRegistrar) {
     taskRegistrar.setScheduler(taskExecutor());
 
-    // TagCounterService
     taskRegistrar.addTriggerTask(() -> tagCounterUpdater.updateTagCounter(), triggerContext -> {
 
       Calendar nextExecutionTime = new GregorianCalendar();
 
-      nextExecutionTime.add(Calendar.SECOND,
-          Integer.valueOf(env.getProperty("tagRecommendationCalculation.delay.seconds")));
+      if (initialStart) {
+        initialStart = false;
+        nextExecutionTime.add(Calendar.SECOND, Integer.valueOf(env.getProperty("tagCounter.delay.initial.seconds")));
+        return nextExecutionTime.getTime();
+      }
+
+      nextExecutionTime.add(Calendar.MINUTE, Integer.valueOf(env.getProperty("tagCounter.delay.minutes")));
+
       return nextExecutionTime.getTime();
     });
   }
