@@ -26,7 +26,7 @@ public class TagCollection {
   private UUID referencedEntity;
 
   @ManyToMany
-  private List<Tag> tagCollection = new ArrayList<>();
+  private List<Tag> tags = new ArrayList<>();
 
 
   public TagCollection(UUID referencedEntity) {
@@ -35,7 +35,7 @@ public class TagCollection {
 
   public void addTag(Tag tag)
   {
-    if(!this.tagCollection.contains(tag))
-      this.tagCollection.add(tag);
+    if(!this.tags.contains(tag))
+      this.tags.add(tag);
   }
 }

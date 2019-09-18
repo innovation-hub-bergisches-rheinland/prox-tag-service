@@ -3,8 +3,6 @@ package io.archilab.prox.tagservice.tag.recommendation;
 import io.archilab.prox.tagservice.tag.Tag;
 import io.archilab.prox.tagservice.tag.TagCollection;
 import io.archilab.prox.tagservice.tag.TagCollectionRepository;
-import io.archilab.prox.tagservice.tag.recommendation.TagCounter;
-import io.archilab.prox.tagservice.tag.recommendation.TagCounterRepository;
 import lombok.NoArgsConstructor;
 import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +38,7 @@ public class TagCounterUpdater {
 
     for (TagCollection col : collection){
 
-      List<Tag> tags = col.getTagCollection();
+      List<Tag> tags = col.getTags();
       Collections.sort(tags);
 
       for (int i = 0; i < tags.size() - 1; i++){
