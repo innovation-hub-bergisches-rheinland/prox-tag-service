@@ -30,9 +30,7 @@ public class TagRecommendationController {
 
   @RequestMapping(path = "", method = RequestMethod.GET, produces = { "application/hal+json" })
   public ResponseEntity<Resources<Resource<Tag>>> tagRecommendations(@RequestParam("tags") UUID[] tagIds) {
-    long t1 = System.currentTimeMillis();
     List<Tag> recommendedTags = tagRecommendationCalculator.getRecommendedTags(tagIds);
-    System.out.println("TIME: " + (System.currentTimeMillis() - t1));
 
     Resources<Resource<Tag>> recommendedTagResources = generateTagResources(recommendedTags);
 
