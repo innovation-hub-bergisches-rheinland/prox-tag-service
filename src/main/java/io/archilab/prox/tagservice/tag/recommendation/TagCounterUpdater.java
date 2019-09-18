@@ -8,7 +8,6 @@ import lombok.var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +24,8 @@ public class TagCounterUpdater {
   @Autowired
   private TagCounterRepository tagCounterRepository;
 
-  public TagCounterUpdater(TagCollectionRepository tagCollectionRepository, TagCounterRepository tagCounterRepository) {
+  public TagCounterUpdater(TagCollectionRepository tagCollectionRepository,
+      TagCounterRepository tagCounterRepository) {
     this.tagCollectionRepository = tagCollectionRepository;
     this.tagCounterRepository = tagCounterRepository;
   }
@@ -36,26 +36,22 @@ public class TagCounterUpdater {
 
     var collection = tagCollectionRepository.findAll();
 
-    for (TagCollection col : collection){
+    for (TagCollection col : collection) {
 
       List<Tag> tags = col.getTags();
       Collections.sort(tags);
 
-      for (int i = 0; i < tags.size() - 1; i++){
-        for(int k = i + 1; k < tags.size(); k++)
-        {
+      for (int i = 0; i < tags.size() - 1; i++) {
+        for (int k = i + 1; k < tags.size(); k++) {
           var tag1 = tags.get(i);
           var tag2 = tags.get(k);
 
           var counter = new TagCounter(tag1, tag2, 1);
 
-          if(cache.containsKey(counter))
-          {
+          if (cache.containsKey(counter)) {
             counter = cache.get(counter);
             counter.setCount(counter.getCount() + 1);
-          }
-          else
-          {
+          } else {
             cache.put(counter, counter);
           }
         }

@@ -10,11 +10,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import io.archilab.prox.tagservice.tag.Tag;
 import io.archilab.prox.tagservice.tag.TagController;
 
@@ -28,23 +26,25 @@ public class TagRecommendationController {
   private TagRecommendationCalculator tagRecommendationCalculator;
 
 
-  @RequestMapping(path = "", method = RequestMethod.GET, produces = { "application/hal+json" })
-  public ResponseEntity<Resources<Resource<Tag>>> tagRecommendations(@RequestParam("tags") UUID[] tagIds) {
+  @RequestMapping(path = "", method = RequestMethod.GET, produces = {"application/hal+json"})
+  public ResponseEntity<Resources<Resource<Tag>>> tagRecommendations(
+      @RequestParam("tags") UUID[] tagIds) {
     List<Tag> recommendedTags = tagRecommendationCalculator.getRecommendedTags(tagIds);
 
     Resources<Resource<Tag>> recommendedTagResources = generateTagResources(recommendedTags);
 
-    recommendedTagResources.add(ControllerLinkBuilder.linkTo(
-        ControllerLinkBuilder.methodOn(TagRecommendationController.class).tagRecommendations(tagIds))
-        .withSelfRel());
+    recommendedTagResources.add(ControllerLinkBuilder.linkTo(ControllerLinkBuilder
+        .methodOn(TagRecommendationController.class).tagRecommendations(tagIds)).withSelfRel());
 
     return ResponseEntity.ok(recommendedTagResources);
   }
 
   private Resource<Tag> generateTagResource(Tag tag) {
     Resource<Tag> tagResource = new Resource<>(tag);
-    tagResource.add(ControllerLinkBuilder.linkTo(TagController.class).slash(tag.getId()).withSelfRel());
-    tagResource.add(ControllerLinkBuilder.linkTo(TagController.class).slash(tag.getId()).withRel("tag"));
+    tagResource
+        .add(ControllerLinkBuilder.linkTo(TagController.class).slash(tag.getId()).withSelfRel());
+    tagResource
+        .add(ControllerLinkBuilder.linkTo(TagController.class).slash(tag.getId()).withRel("tag"));
     return tagResource;
   }
 

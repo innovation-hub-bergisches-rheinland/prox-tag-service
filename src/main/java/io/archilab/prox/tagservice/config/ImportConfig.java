@@ -1,7 +1,6 @@
 package io.archilab.prox.tagservice.config;
 
 import io.archilab.prox.tagservice.tag.recommendation.TagCounterUpdater;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,11 +39,13 @@ public class ImportConfig implements SchedulingConfigurer {
 
       if (initialStart) {
         initialStart = false;
-        nextExecutionTime.add(Calendar.SECOND, Integer.valueOf(env.getProperty("tagCounter.delay.initial.seconds")));
+        nextExecutionTime.add(Calendar.SECOND,
+            Integer.valueOf(env.getProperty("tagCounter.delay.initial.seconds")));
         return nextExecutionTime.getTime();
       }
 
-      nextExecutionTime.add(Calendar.MINUTE, Integer.valueOf(env.getProperty("tagCounter.delay.minutes")));
+      nextExecutionTime.add(Calendar.MINUTE,
+          Integer.valueOf(env.getProperty("tagCounter.delay.minutes")));
 
       return nextExecutionTime.getTime();
     });

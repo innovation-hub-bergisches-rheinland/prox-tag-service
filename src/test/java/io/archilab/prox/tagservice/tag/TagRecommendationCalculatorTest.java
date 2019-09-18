@@ -2,17 +2,14 @@ package io.archilab.prox.tagservice.tag;
 
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import java.util.List;
 import java.util.UUID;
-
 import io.archilab.prox.tagservice.tag.recommendation.TagCounter;
 import io.archilab.prox.tagservice.tag.recommendation.TagCounterRepository;
 import io.archilab.prox.tagservice.tag.recommendation.TagRecommendationCalculator;
@@ -47,7 +44,8 @@ public class TagRecommendationCalculatorTest {
     tagCounterRepository.save(new TagCounter(tag2, tag3, 30));
     tagCounterRepository.save(new TagCounter(tag3, tag4, 3));
 
-    List<Tag> result = tagRecommendationCalculator.getRecommendedTags(new UUID[] {tag1.getId(), tag2.getId()});
+    List<Tag> result =
+        tagRecommendationCalculator.getRecommendedTags(new UUID[] {tag1.getId(), tag2.getId()});
     assertEquals(result.size(), 2);
     assertEquals(result.get(0), tag3);
     assertEquals(result.get(1), tag4);

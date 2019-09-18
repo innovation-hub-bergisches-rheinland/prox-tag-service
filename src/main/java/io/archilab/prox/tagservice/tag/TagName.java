@@ -2,7 +2,6 @@ package io.archilab.prox.tagservice.tag;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
