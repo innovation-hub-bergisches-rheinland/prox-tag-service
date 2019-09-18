@@ -1,6 +1,13 @@
 eureka:
   client:
     enabled: false
+tagCounter:
+  delay:
+    initial:
+      seconds: 3600
+  minutes: 60
+tagRecommendationCalculation:
+  resultCount: 15
 keycloak:
   enabled: false
 server:
