@@ -59,6 +59,8 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
     .antMatchers(HttpMethod.GET, "/tagCollections/**").permitAll()
     .antMatchers(HttpMethod.HEAD, "/tagCollections/**").permitAll()
     .antMatchers(HttpMethod.OPTIONS, "/tagCollections/**").permitAll()
+    .antMatchers(HttpMethod.POST, "/tagCollections/**").denyAll()
+    .antMatchers(HttpMethod.DELETE, "/tagCollections/**").denyAll()
     .antMatchers("/tagCollections/**").hasRole("professor")
     
     .antMatchers(HttpMethod.GET, "/tagRecommendations/**").permitAll()
