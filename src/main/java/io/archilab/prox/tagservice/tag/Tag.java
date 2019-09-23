@@ -3,7 +3,6 @@ package io.archilab.prox.tagservice.tag;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import io.archilab.prox.tagservice.core.AbstractEntity;
 import lombok.*;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;

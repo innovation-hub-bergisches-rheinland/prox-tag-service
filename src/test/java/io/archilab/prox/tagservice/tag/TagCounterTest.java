@@ -11,7 +11,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.shaded.com.google.common.collect.Lists;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -69,11 +68,11 @@ public class TagCounterTest {
     this.validateCounter(tags.get(4), tags.get(3), 1);
   }
 
-  private void validateCounter(Tag tag1, Tag tag2, int count)
-  {
-    var result =  Lists.newArrayList(this.tagCounterRepository.findAll());
+  private void validateCounter(Tag tag1, Tag tag2, int count) {
+    var result = Lists.newArrayList(this.tagCounterRepository.findAll());
 
-    var counter = result.stream().filter(f -> (f.getTag1() == tag1 && f.getTag2() == tag2) || (f.getTag1() == tag2 && f.getTag2() == tag1)).findFirst().get();
+    var counter = result.stream().filter(f -> (f.getTag1() == tag1 && f.getTag2() == tag2)
+        || (f.getTag1() == tag2 && f.getTag2() == tag1)).findFirst().get();
 
     Assert.assertEquals(count, counter.getCount());
   }
@@ -89,7 +88,7 @@ public class TagCounterTest {
     return Lists.newArrayList(this.tagRepository.saveAll(tags));
   }
 
-  private TagCollection createCollection(Tag ... tag) {
+  private TagCollection createCollection(Tag... tag) {
     TagCollection col = new TagCollection(UUID.randomUUID());
 
     for (Tag t : tag)

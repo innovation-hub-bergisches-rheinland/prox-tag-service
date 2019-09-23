@@ -50,12 +50,10 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     super.configure(http);
-    http.csrf().disable().authorizeRequests()
-        .antMatchers(HttpMethod.GET, "/tags/**").permitAll()
+    http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.GET, "/tags/**").permitAll()
         .antMatchers("/tags/**").hasRole("professor")
         .antMatchers(HttpMethod.GET, "/tagCollections/**").permitAll()
         .antMatchers("/tagCollections/**").hasRole("professor")
-        .antMatchers(HttpMethod.GET, "/tagRecommendations/**").permitAll()
-        .anyRequest().denyAll();
+        .antMatchers(HttpMethod.GET, "/tagRecommendations/**").permitAll().anyRequest().denyAll();
   }
 }

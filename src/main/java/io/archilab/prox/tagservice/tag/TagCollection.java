@@ -3,11 +3,9 @@ package io.archilab.prox.tagservice.tag;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,9 +31,8 @@ public class TagCollection {
     this.referencedEntity = referencedEntity;
   }
 
-  public void addTag(Tag tag)
-  {
-    if(!this.tags.contains(tag))
+  public void addTag(Tag tag) {
+    if (!this.tags.contains(tag))
       this.tags.add(tag);
   }
 }
