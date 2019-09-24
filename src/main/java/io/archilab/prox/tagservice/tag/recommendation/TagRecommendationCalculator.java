@@ -27,7 +27,6 @@ public class TagRecommendationCalculator {
   @Value("${tagRecommendationCalculation.resultCount}")
   private int resultCount;
 
-
   public List<Tag> getRecommendedTags(UUID[] tagIds) {
     // Retrieve search tags
     List<Tag> searchTags = new ArrayList<>();

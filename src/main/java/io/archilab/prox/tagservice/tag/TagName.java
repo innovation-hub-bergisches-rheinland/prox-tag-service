@@ -34,4 +34,8 @@ public class TagName implements Comparable<TagName> {
   public int compareTo(TagName o) {
     return this.getTagName().compareTo(o.getTagName());
   }
+  
+  public void setTagName(String tagName) {
+    this.tagName = tagName.toLowerCase();
+  }
 }

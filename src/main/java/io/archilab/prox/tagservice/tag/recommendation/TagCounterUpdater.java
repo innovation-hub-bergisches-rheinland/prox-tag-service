@@ -1,10 +1,14 @@
 package io.archilab.prox.tagservice.tag.recommendation;
 
+
 import io.archilab.prox.tagservice.tag.Tag;
 import io.archilab.prox.tagservice.tag.TagCollection;
 import io.archilab.prox.tagservice.tag.TagCollectionRepository;
 import lombok.NoArgsConstructor;
 import lombok.var;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +21,9 @@ import java.util.Map;
 @Service
 @NoArgsConstructor
 public class TagCounterUpdater {
+  
+  private final Logger log = LoggerFactory.getLogger(TagCounterUpdater.class);
+
 
   @Autowired
   private TagCollectionRepository tagCollectionRepository;
@@ -34,10 +41,10 @@ public class TagCounterUpdater {
 
     Map<TagCounter, TagCounter> cache = new HashMap<>();
 
-    var collection = tagCollectionRepository.findAll();
+    var collection = tagCollectionRepository.findAll();   
 
     for (TagCollection col : collection) {
-
+      
       List<Tag> tags = col.getTags();
       Collections.sort(tags);
 
@@ -59,7 +66,9 @@ public class TagCounterUpdater {
     }
 
     this.tagCounterRepository.deleteAll();
+    
 
     this.tagCounterRepository.saveAll(cache.values());
+    
   }
 }
