@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 @Component
-public class TagCollectionCreator implements Filter {
+public class TagCollectionFilterCreator implements Filter {
 
   @Autowired
   private TagCollectionRepository tagCollectionRepository;

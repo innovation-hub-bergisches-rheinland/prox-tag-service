@@ -6,7 +6,7 @@ tagCounter:
   delay:
     initial:
        seconds: 10
-  minutes: 1
+    minutes: 1
 tagRecommendationCalculation:
   resultCount: 15
 keycloak:
