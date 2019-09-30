@@ -15,7 +15,7 @@ public class TagName implements Comparable<TagName> {
 
   private static final int MAX_LENGTH = 40;
 
-  @Column(length = 40)
+  @Column(length = MAX_LENGTH)
   private String tagName;
 
   public TagName(String tagName) {
