@@ -1,73 +1,82 @@
 package io.archilab.prox.tagservice.tag.recommendation;
 
 
-import io.archilab.prox.tagservice.tag.Tag;
-import io.archilab.prox.tagservice.tag.TagCollection;
-import io.archilab.prox.tagservice.tag.TagCollectionRepository;
-import lombok.NoArgsConstructor;
-import lombok.var;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.springframework.stereotype.Component;
 
-@Transactional
-@Service
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import io.archilab.prox.tagservice.tag.Tag;
+import io.archilab.prox.tagservice.tag.TagCollection;
+import lombok.NoArgsConstructor;
+
+@Component
 @NoArgsConstructor
 public class TagCounterUpdater {
 
   private final Logger log = LoggerFactory.getLogger(TagCounterUpdater.class);
 
-
-  @Autowired
-  private TagCollectionRepository tagCollectionRepository;
-
   @Autowired
   private TagCounterRepository tagCounterRepository;
 
-  public TagCounterUpdater(TagCollectionRepository tagCollectionRepository,
-      TagCounterRepository tagCounterRepository) {
-    this.tagCollectionRepository = tagCollectionRepository;
+
+  public TagCounterUpdater(TagCounterRepository tagCounterRepository) {
     this.tagCounterRepository = tagCounterRepository;
   }
 
-  public void updateTagCounter() {
+  public void updateTagCounter(TagCollection updatedTagCollection, List<Tag> oldTags) {
+    // decrease counts of tag combinations which are now obsolete because of an updated association
+    if (oldTags != null && !oldTags.isEmpty()) {
+      applyTagCountersToRepository(getTagCounterFromTags(oldTags), false);
+    }
 
-    Map<TagCounter, TagCounter> cache = new HashMap<>();
+    // increase counts of tag combinations which are new
+    applyTagCountersToRepository(getTagCounterFromTags(updatedTagCollection.getTags()), true);
+  }
 
-    var collection = tagCollectionRepository.findAll();
+  private void applyTagCountersToRepository(List<TagCounter> tagCounters, boolean additive) {
+    for (TagCounter tagCounter : tagCounters) {
+      TagCounter existingTagCounter = getTagCounterFromRepository(tagCounter);
+      if (existingTagCounter == null) {
+        if (additive) {
+          tagCounterRepository.save(tagCounter);
+        }
+      } else {
+        if (additive) {
+          existingTagCounter.setCount(existingTagCounter.getCount() + 1);
+        } else {
+          existingTagCounter.setCount(existingTagCounter.getCount() - 1);
+        }
+        tagCounterRepository.save(existingTagCounter);
+      }
+    }
+  }
 
-    for (TagCollection col : collection) {
+  private TagCounter getTagCounterFromRepository(TagCounter tagCounter) {
+    Optional<TagCounter> existingTagCounterOpt = tagCounterRepository.findByTag1AndTag2(tagCounter.getTag1(), tagCounter.getTag2());
+    if (!existingTagCounterOpt.isPresent()) {
+      existingTagCounterOpt = tagCounterRepository.findByTag1AndTag2(tagCounter.getTag2(), tagCounter.getTag1());
+    }
+    return existingTagCounterOpt.isPresent() ? existingTagCounterOpt.get() : null;
+  }
 
-      List<Tag> tags = col.getTags();
-      Collections.sort(tags);
+  private List<TagCounter> getTagCounterFromTags(List<Tag> tags) {
+    List<TagCounter> tagCounters = new ArrayList<>();
 
-      for (int i = 0; i < tags.size() - 1; i++) {
-        for (int k = i + 1; k < tags.size(); k++) {
-          var tag1 = tags.get(i);
-          var tag2 = tags.get(k);
+    for (int i = 0; i < tags.size() - 1; i++) {
+      for (int k = i + 1; k < tags.size(); k++) {
+        TagCounter counter = new TagCounter(tags.get(i), tags.get(k), 1);
 
-          var counter = new TagCounter(tag1, tag2, 1);
-
-          if (cache.containsKey(counter)) {
-            counter = cache.get(counter);
-            counter.setCount(counter.getCount() + 1);
-          } else {
-            cache.put(counter, counter);
-          }
+        if (!tagCounters.contains(counter)) {
+          tagCounters.add(counter);
         }
       }
     }
 
-    this.tagCounterRepository.deleteAll();
-
-
-    this.tagCounterRepository.saveAll(cache.values());
-
+    return tagCounters;
   }
 }

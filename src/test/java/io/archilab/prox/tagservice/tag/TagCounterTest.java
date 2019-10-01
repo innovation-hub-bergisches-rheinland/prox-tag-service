@@ -1,8 +1,5 @@
 package io.archilab.prox.tagservice.tag;
 
-import io.archilab.prox.tagservice.tag.recommendation.TagCounterRepository;
-import io.archilab.prox.tagservice.tag.recommendation.TagCounterUpdater;
-import lombok.var;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,10 +8,14 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.shaded.com.google.common.collect.Lists;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
+
+import io.archilab.prox.tagservice.tag.recommendation.TagCounterRepository;
+import io.archilab.prox.tagservice.tag.recommendation.TagCounterUpdater;
+import lombok.var;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -32,15 +33,19 @@ public class TagCounterTest {
 
   @Test
   public void tagCounterTest() {
+    var updater = new TagCounterUpdater(this.tagCounterRepository);
+
     var tags = this.createTags(5);
 
-    this.createCollection(tags.get(0), tags.get(1), tags.get(2), tags.get(3), tags.get(4));
-    this.createCollection(tags.get(0), tags.get(1), tags.get(2), tags.get(3));
-    this.createCollection(tags.get(0), tags.get(1), tags.get(2));
-    this.createCollection(tags.get(0), tags.get(1));
+    TagCollection tagCollection1 = this.createCollection(tags.get(0), tags.get(1), tags.get(2), tags.get(3), tags.get(4));
+    TagCollection tagCollection2 = this.createCollection(tags.get(0), tags.get(1), tags.get(2), tags.get(3));
+    TagCollection tagCollection3 = this.createCollection(tags.get(0), tags.get(1), tags.get(2));
+    TagCollection tagCollection4 = this.createCollection(tags.get(0), tags.get(1));
 
-    var updater = new TagCounterUpdater(this.tagCollectionRepository, this.tagCounterRepository);
-    updater.updateTagCounter();
+    updater.updateTagCounter(tagCollection1, null);
+    updater.updateTagCounter(tagCollection2, null);
+    updater.updateTagCounter(tagCollection3, null);
+    updater.updateTagCounter(tagCollection4, null);
 
     this.validateCounter(tags.get(0), tags.get(1), 4);
     this.validateCounter(tags.get(0), tags.get(2), 3);

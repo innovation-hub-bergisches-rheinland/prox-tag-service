@@ -2,11 +2,6 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://service-discovery:8761/eureka/
-tagCounter:
-  delay:
-    initial:
-       seconds: 10
-    minutes: 1
 tagRecommendationCalculation:
   resultCount: 15
 keycloak:
