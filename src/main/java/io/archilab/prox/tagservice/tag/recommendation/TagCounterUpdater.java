@@ -5,11 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import io.archilab.prox.tagservice.tag.Tag;
 import io.archilab.prox.tagservice.tag.TagCollection;
 import lombok.NoArgsConstructor;
@@ -57,9 +55,11 @@ public class TagCounterUpdater {
   }
 
   private TagCounter getTagCounterFromRepository(TagCounter tagCounter) {
-    Optional<TagCounter> existingTagCounterOpt = tagCounterRepository.findByTag1AndTag2(tagCounter.getTag1(), tagCounter.getTag2());
+    Optional<TagCounter> existingTagCounterOpt =
+        tagCounterRepository.findByTag1AndTag2(tagCounter.getTag1(), tagCounter.getTag2());
     if (!existingTagCounterOpt.isPresent()) {
-      existingTagCounterOpt = tagCounterRepository.findByTag1AndTag2(tagCounter.getTag2(), tagCounter.getTag1());
+      existingTagCounterOpt =
+          tagCounterRepository.findByTag1AndTag2(tagCounter.getTag2(), tagCounter.getTag1());
     }
     return existingTagCounterOpt.isPresent() ? existingTagCounterOpt.get() : null;
   }

@@ -4,9 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleBeforeLinkSave;
 import org.springframework.data.rest.core.annotation.RepositoryEventHandler;
 import org.springframework.stereotype.Component;
-
 import java.util.List;
-
 import io.archilab.prox.tagservice.tag.Tag;
 import io.archilab.prox.tagservice.tag.TagCollection;
 

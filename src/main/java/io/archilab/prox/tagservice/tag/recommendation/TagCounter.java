@@ -2,7 +2,6 @@ package io.archilab.prox.tagservice.tag.recommendation;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-
 import io.archilab.prox.tagservice.core.AbstractEntity;
 import io.archilab.prox.tagservice.tag.Tag;
 import lombok.AccessLevel;
@@ -48,8 +47,7 @@ public class TagCounter extends AbstractEntity {
     if (!(o instanceof TagCounter)) {
       return false;
     }
-    return (tag1.equals(((TagCounter)(o)).getTag1())
-        && tag2.equals(((TagCounter)(o)).getTag2()));
+    return (tag1.equals(((TagCounter) (o)).getTag1()) && tag2.equals(((TagCounter) (o)).getTag2()));
   }
 
   public Tag getOtherTag(Tag tag) {

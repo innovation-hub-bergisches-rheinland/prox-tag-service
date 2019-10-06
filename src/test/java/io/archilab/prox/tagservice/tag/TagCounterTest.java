@@ -8,11 +8,9 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.shaded.com.google.common.collect.Lists;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import io.archilab.prox.tagservice.tag.recommendation.TagCounterRepository;
 import io.archilab.prox.tagservice.tag.recommendation.TagCounterUpdater;
 import lombok.var;
@@ -37,8 +35,10 @@ public class TagCounterTest {
 
     var tags = this.createTags(5);
 
-    TagCollection tagCollection1 = this.createCollection(tags.get(0), tags.get(1), tags.get(2), tags.get(3), tags.get(4));
-    TagCollection tagCollection2 = this.createCollection(tags.get(0), tags.get(1), tags.get(2), tags.get(3));
+    TagCollection tagCollection1 =
+        this.createCollection(tags.get(0), tags.get(1), tags.get(2), tags.get(3), tags.get(4));
+    TagCollection tagCollection2 =
+        this.createCollection(tags.get(0), tags.get(1), tags.get(2), tags.get(3));
     TagCollection tagCollection3 = this.createCollection(tags.get(0), tags.get(1), tags.get(2));
     TagCollection tagCollection4 = this.createCollection(tags.get(0), tags.get(1));
 
