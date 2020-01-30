@@ -1,5 +1,10 @@
 package io.archilab.prox.tagservice.tag;
 
+import io.archilab.prox.tagservice.tag.recommendation.TagCounterRepository;
+import io.archilab.prox.tagservice.tag.recommendation.TagCounterUpdater;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,26 +13,17 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.shaded.com.google.common.collect.Lists;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-import io.archilab.prox.tagservice.tag.recommendation.TagCounterRepository;
-import io.archilab.prox.tagservice.tag.recommendation.TagCounterUpdater;
-import lombok.var;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @ComponentScan
 public class TagCounterTest {
 
-  @Autowired
-  private TagRepository tagRepository;
+  @Autowired private TagRepository tagRepository;
 
-  @Autowired
-  private TagCounterRepository tagCounterRepository;
+  @Autowired private TagCounterRepository tagCounterRepository;
 
-  @Autowired
-  private TagCollectionRepository tagCollectionRepository;
+  @Autowired private TagCollectionRepository tagCollectionRepository;
 
   @Test
   public void tagCounterTest() {
@@ -76,19 +72,25 @@ public class TagCounterTest {
   private void validateCounter(Tag tag1, Tag tag2, int count) {
     var result = Lists.newArrayList(this.tagCounterRepository.findAll());
 
-    var counter = result.stream().filter(f -> (f.getTag1() == tag1 && f.getTag2() == tag2)
-        || (f.getTag1() == tag2 && f.getTag2() == tag1)).findFirst().get();
+    var counter =
+        result.stream()
+            .filter(
+                f ->
+                    (f.getTag1() == tag1 && f.getTag2() == tag2)
+                        || (f.getTag1() == tag2 && f.getTag2() == tag1))
+            .findFirst()
+            .get();
 
     Assert.assertEquals(count, counter.getCount());
   }
-
 
   private List<Tag> createTags(int count) {
 
     List<Tag> tags = new ArrayList<>();
 
-    for (int i = 1; i <= count; i++)
+    for (int i = 1; i <= count; i++) {
       tags.add(new Tag(new TagName("Tag " + i)));
+    }
 
     return Lists.newArrayList(this.tagRepository.saveAll(tags));
   }
@@ -96,10 +98,10 @@ public class TagCounterTest {
   private TagCollection createCollection(Tag... tag) {
     TagCollection col = new TagCollection(UUID.randomUUID());
 
-    for (Tag t : tag)
+    for (Tag t : tag) {
       col.addTag(t);
+    }
 
     return this.tagCollectionRepository.save(col);
   }
-
 }
