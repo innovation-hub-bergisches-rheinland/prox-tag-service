@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+  tag-service:
+    image: ${REPOSITORY}/${IMAGE}:${TAG}
+    networks:
+      - prox
+      - tag-db
+
+  tag-db:
+    image: postgres:11.3-alpine
+    volumes:
+      - tag-db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=tag-service
+      - POSTGRES_PASSWORD=tag-service
+      - POSTGRES_DB=tag-db
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    networks:
+      - tag-db
+
+volumes:
+  tag-db-data:
+
+networks:
+  prox:
+    external: true
+  tag-db:
