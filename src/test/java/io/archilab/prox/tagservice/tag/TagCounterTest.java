@@ -1,20 +1,18 @@
 package io.archilab.prox.tagservice.tag;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import io.archilab.prox.tagservice.tag.recommendation.TagCounterRepository;
 import io.archilab.prox.tagservice.tag.recommendation.TagCounterUpdater;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.shaded.com.google.common.collect.Lists;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
 @ComponentScan
 public class TagCounterTest {
@@ -79,9 +77,9 @@ public class TagCounterTest {
                     (f.getTag1() == tag1 && f.getTag2() == tag2)
                         || (f.getTag1() == tag2 && f.getTag2() == tag1))
             .findFirst()
-            .get();
+            .orElseThrow();
 
-    Assert.assertEquals(count, counter.getCount());
+    assertEquals(count, counter.getCount());
   }
 
   private List<Tag> createTags(int count) {

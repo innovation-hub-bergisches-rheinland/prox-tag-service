@@ -9,12 +9,11 @@ keycloak:
   bearer-only: true
   cors: false
   principal-attribute: preferred_username
-  public-client: false
   realm: archilab
-  resource: tag-service
+  resource: prox-tag-service
 server:
   port: 9003
-  use-forward-headers: true
+  forward-headers-strategy: native
 spring:
   application:
     name: tag-service

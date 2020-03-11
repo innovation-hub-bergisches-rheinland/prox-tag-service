@@ -1,20 +1,17 @@
 package io.archilab.prox.tagservice.tag;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import io.archilab.prox.tagservice.tag.recommendation.TagCounter;
 import io.archilab.prox.tagservice.tag.recommendation.TagCounterRepository;
 import io.archilab.prox.tagservice.tag.recommendation.TagRecommendationCalculator;
 import java.util.List;
 import java.util.UUID;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
 @ComponentScan
 public class TagRecommendationCalculatorTest {

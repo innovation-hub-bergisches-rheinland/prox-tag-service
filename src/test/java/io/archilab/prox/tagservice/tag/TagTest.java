@@ -1,20 +1,16 @@
 package io.archilab.prox.tagservice.tag;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
 @DataJpaTest
 @ComponentScan
 public class TagTest {
@@ -54,14 +50,14 @@ public class TagTest {
     Tag tag_fail = new Tag(new TagName("Tag_1"));
 
     this.tagRepository.save(tag_1);
-    Assert.assertEquals(1, this.tagRepository.count());
+    assertEquals(1, this.tagRepository.count());
 
     this.tagRepository.save(tag_2);
-    Assert.assertEquals(2, this.tagRepository.count());
+    assertEquals(2, this.tagRepository.count());
 
     try {
       this.tagRepository.save(tag_fail);
-      Assert.assertEquals(2, this.tagRepository.count());
+      assertEquals(2, this.tagRepository.count());
     } catch (DataIntegrityViolationException e) {
       return;
     }
