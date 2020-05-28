@@ -17,6 +17,10 @@ server:
 spring:
   application:
     name: tag-service
+  data:
+    rest:
+      max-page-size: 1000000000
+      default-page-size: 1000000000
   datasource:
     password: tag-service
     url: jdbc:postgresql://tag-db:5432/tag-db
