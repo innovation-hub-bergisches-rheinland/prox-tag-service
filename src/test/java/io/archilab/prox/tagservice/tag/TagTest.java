@@ -3,6 +3,7 @@ package io.archilab.prox.tagservice.tag;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
@@ -13,12 +14,12 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 @DataJpaTest
 @ComponentScan
-public class TagTest {
+class TagTest {
 
   @Autowired TagRepository tagRepository;
 
   @Test
-  public void tagNameConstraints() {
+  void tagNameConstraints() {
 
     String name_5 = "12345";
     String name_40 = "1234567890123456789012345678901234567890";
@@ -44,7 +45,7 @@ public class TagTest {
   }
 
   @Test
-  public void tagUniqueName() {
+  void tagUniqueName() {
     Tag tag_1 = new Tag(new TagName("Tag_1"));
     Tag tag_2 = new Tag(new TagName("Tag_2"));
     Tag tag_fail = new Tag(new TagName("Tag_1"));
@@ -66,7 +67,7 @@ public class TagTest {
   }
 
   @Test
-  public void tagCreate() {
+  void tagCreate() {
     String name_5 = "12345";
     String name_40 = "12345678901234567890";
 
@@ -78,5 +79,16 @@ public class TagTest {
 
     assertEquals(tag_5.getTagName().getTagName(), name_5);
     assertEquals(tag_40.getTagName().getTagName(), name_40);
+  }
+
+  @Test
+  void tagCompare() {
+    Tag tag1 = new Tag(new TagName("Tag 1"));
+    Tag tag2 = new Tag(new TagName("Tag 2"));
+    Tag tag3 = new Tag(new TagName("Tag 1"));
+
+    assertTrue(tag1.compareTo(tag2) < 0);
+    assertTrue(tag2.compareTo(tag1) > 0);
+    assertEquals(0, tag3.compareTo(tag1));
   }
 }
