@@ -1,0 +1,19 @@
+{
+  "_links" : {
+    "projectStudyCourses" : {
+      "href" : "{{request.baseUrl}}/projectStudyCourses{?page,size,sort}",
+      "templated" : true
+    },
+    "projectModules" : {
+      "href" : "{{request.baseUrl}}/projectModules{?page,size,sort}",
+      "templated" : true
+    },
+    "projects" : {
+      "href" : "{{request.baseUrl}}/projects{?page,size,sort}",
+      "templated" : true
+    },
+    "profile" : {
+      "href" : "{{request.baseUrl}}/profile"
+    }
+  }
+}

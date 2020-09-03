@@ -1,0 +1,11 @@
+{
+  "_embedded": {
+    "projects": [
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "{{request.baseUrl}}/projects/search/findAllByIds?projectIds={{request.query.projectIds}}"
+    }
+  }
+}
