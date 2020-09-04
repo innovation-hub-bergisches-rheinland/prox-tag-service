@@ -11,23 +11,15 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.netflix.discovery.EurekaClient;
-import io.archilab.prox.tagservice.net.ProjectClient;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
@@ -43,27 +35,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @SpringBootTest
 @AutoConfigureMockMvc(addFilters = false)
+@AutoConfigureDataJpa
 @Transactional
 class TagAPITest {
   private static final String TAGS_ROUTE = "/tags";
   private static final String TAGS_ID_ROUTE = "/tags/{id}";
 
-  @TestConfiguration
-  public static class MockEurekaAndProjectClientConfiguration {
-
-    //TODO Get rid of mocking the beans, find a clean solution
-
-    @Bean
-    @Qualifier("eurekaClient")
-    @ConditionalOnMissingBean
-    public EurekaClient eurekaClient() {
-      return Mockito.mock(EurekaClient.class);
-    }
-
-    @MockBean
-    @InjectMocks
-    public ProjectClient projectClient;
-  }
 
   @Autowired
   MockMvc mockMvc;
