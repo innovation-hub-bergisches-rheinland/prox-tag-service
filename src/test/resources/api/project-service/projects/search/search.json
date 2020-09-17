@@ -1,0 +1,23 @@
+{
+  "_links" : {
+    "findAllByIds" : {
+      "href" : "{{request.baseUrl}}/projects/search/findAllByIds{?projectIds}",
+      "templated" : true
+    },
+    "findBySupervisorName_SupervisorNameContaining" : {
+      "href" : "{{request.baseUrl}}/projects/search/findBySupervisorName_SupervisorNameContaining{?supervisorName}",
+      "templated" : true
+    },
+    "findAllByModifiedAfter" : {
+      "href" : "{{request.baseUrl}}/projects/search/findAllByModifiedAfter{?modified}",
+      "templated" : true
+    },
+    "findByStatus" : {
+      "href" : "{{request.baseUrl}}/projects/search/findByStatus{?status}",
+      "templated" : true
+    },
+    "self" : {
+      "href" : "{{request.baseUrl}}/projects/search"
+    }
+  }
+}

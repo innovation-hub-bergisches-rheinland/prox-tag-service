@@ -22,23 +22,17 @@
  * SOFTWARE.
  */
 
-package io.archilab.prox.tagservice.core;
+package io.archilab.prox.tagservice.config;
 
-import java.util.UUID;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import io.archilab.prox.tagservice.utils.AuthenticationUtils;
+import io.archilab.prox.tagservice.utils.KeycloakAuthenticationUtils;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@MappedSuperclass
-@Data
-@Setter(AccessLevel.NONE)
-public class AbstractEntity {
-
-  @Id private UUID id;
-
-  protected AbstractEntity() {
-    this.id = UUID.randomUUID();
+@Configuration
+public class UtilsConfig {
+  @Bean
+  public AuthenticationUtils authenticationUtils() {
+    return new KeycloakAuthenticationUtils();
   }
 }

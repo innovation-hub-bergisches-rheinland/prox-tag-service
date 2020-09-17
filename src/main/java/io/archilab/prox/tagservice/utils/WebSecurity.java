@@ -22,45 +22,41 @@
  * SOFTWARE.
  */
 
-package io.archilab.prox.tagservice.tag;
+package io.archilab.prox.tagservice.utils;
 
-import java.io.IOException;
+
+import io.archilab.prox.tagservice.net.ProjectClient;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+/**
+ * A security component which provides some useful security features and checks to secure the service
+ */
 @Component
-public class TagCollectionFilterCreator implements Filter {
+public class WebSecurity {
 
-  @Autowired private TagCollectionRepository tagCollectionRepository;
+  private final AuthenticationUtils authenticationUtils;
 
-  @Override
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-      throws IOException, ServletException {
+  @Autowired
+  public WebSecurity(AuthenticationUtils authenticationUtils) {
+    this.authenticationUtils = authenticationUtils;
+  }
 
-    HttpServletRequest req = (HttpServletRequest) request;
-
-    // Create a Pattern object
-    Pattern r = Pattern.compile("\\/tagCollections\\/(.*)\\/tags");
-
-    // Now create matcher object.
-    Matcher m = r.matcher(req.getRequestURI());
-
-    if (m.find()) {
-      UUID tagCollectionId = UUID.fromString(m.group(1));
-      if (!tagCollectionRepository.findById(tagCollectionId).isPresent()) {
-        tagCollectionRepository.save(new TagCollection(tagCollectionId));
-      }
-    }
-
-    chain.doFilter(request, response);
+  /**
+   * Checks whether the requesting User is the creator of the project which is referenced by the TagCollection
+   * @param request Request (User UUID will be extracted)
+   * @param tagCollectionId The TagCollection ID which should be the same as project ID
+   * @param projectClient ProjectClient Bean to retrieve the Creator of project
+   * @return true if requesting user is creator of project referenced by TagCollection, otherwise false
+   */
+  public boolean checkProjectCreator(HttpServletRequest request, UUID tagCollectionId, ProjectClient projectClient) {
+    Optional<UUID> optionalUUID = authenticationUtils.getUserUUIDFromRequest(request);
+    Optional<UUID> creatorUUID = projectClient.getCreatorIdOfProject(tagCollectionId);
+    return creatorUUID.isPresent()
+        && optionalUUID.isPresent()
+        && creatorUUID.get().equals(optionalUUID.get());
   }
 }

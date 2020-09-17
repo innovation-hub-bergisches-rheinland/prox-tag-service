@@ -1,0 +1,23 @@
+{
+  "_embedded" : {
+    "projects" : [ ]
+  },
+  "_links" : {
+    "self" : {
+      "href" : "{{request.baseUrl}}/projects{?page,size,sort}",
+      "templated" : true
+    },
+    "profile" : {
+      "href" : "{{request.baseUrl}}/profile/projects"
+    },
+    "search" : {
+      "href" : "{{request.baseUrl}}/projects/search"
+    }
+  },
+  "page" : {
+    "size" : 1000000000,
+    "totalElements" : 0,
+    "totalPages" : 0,
+    "number" : 0
+  }
+}

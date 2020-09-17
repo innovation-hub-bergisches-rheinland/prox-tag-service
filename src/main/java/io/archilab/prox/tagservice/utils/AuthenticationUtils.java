@@ -22,23 +22,21 @@
  * SOFTWARE.
  */
 
-package io.archilab.prox.tagservice.core;
+package io.archilab.prox.tagservice.utils;
 
+import java.util.Optional;
 import java.util.UUID;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import lombok.AccessLevel;
-import lombok.Data;
-import lombok.Setter;
+import javax.servlet.http.HttpServletRequest;
 
-@MappedSuperclass
-@Data
-@Setter(AccessLevel.NONE)
-public class AbstractEntity {
+/**
+ * Provides some Authentication Utilities
+ */
+public interface AuthenticationUtils {
 
-  @Id private UUID id;
-
-  protected AbstractEntity() {
-    this.id = UUID.randomUUID();
-  }
+  /**
+   * Method to obtain UUID of the requesting user from a HttpServletRequest
+   * @param request the request of which the UUID should be extracted
+   * @return If extraction was successful it returns the UUID, otherwise a empty optional
+   */
+  Optional<UUID> getUserUUIDFromRequest(HttpServletRequest request);
 }
