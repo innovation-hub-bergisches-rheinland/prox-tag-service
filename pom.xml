@@ -8,7 +8,7 @@
     <version>2.2.5.RELEASE</version>
   </parent>
 
-  <groupId>io.archi-lab.prox</groupId>
+  <groupId>de.innovation-hub.prox</groupId>
   <artifactId>prox-tag-service</artifactId>
   <version>${revision}${changelist}</version>
 
@@ -108,6 +108,12 @@
       <scope>runtime</scope>
       <optional>true</optional>
     </dependency>
+    <dependency>
+      <groupId>com.github.tomakehurst</groupId>
+      <artifactId>wiremock-jre8</artifactId>
+      <version>2.27.0</version>
+      <scope>test</scope>
+    </dependency>
 
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -129,12 +135,6 @@
       <groupId>org.testcontainers</groupId>
       <artifactId>postgresql</artifactId>
       <version>${testContainers.postgresql.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.github.tomakehurst</groupId>
-      <artifactId>wiremock-jre8</artifactId>
-      <version>2.27.0</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
