@@ -17,7 +17,7 @@
 
   <properties>
     <changelist>-SNAPSHOT</changelist>
-    <docker.image.prefix>docker.nexus.archi-lab.io/archilab</docker.image.prefix>
+    <docker.image.prefix>docker.nexus.archi-lab.io/ihbr</docker.image.prefix>
     <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
     <frontend-maven-plugin.nodeVersion>v13.2.0</frontend-maven-plugin.nodeVersion>
     <frontend-maven-plugin.version>1.9.1</frontend-maven-plugin.version>
