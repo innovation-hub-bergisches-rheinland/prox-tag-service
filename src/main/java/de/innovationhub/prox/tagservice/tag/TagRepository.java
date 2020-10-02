@@ -32,9 +32,9 @@ import org.springframework.data.rest.core.annotation.RestResource;
 
 public interface TagRepository extends PagingAndSortingRepository<Tag, UUID>, TagRepositoryCustom {
 
-  @RestResource(path = "findByTagName_TagName")
+  @RestResource(path = "findByTagName")
   Set<Tag> findByTagNameTagNameIgnoreCase(@Param(value = "tagName") String tagName);
 
-  @RestResource(path = "findByTagName_TagNameContaining")
+  @RestResource(path = "findByTagNameContaining")
   Set<Tag> findByTagNameTagNameContainingIgnoreCase(@Param(value = "tagName") String tagName);
 }
