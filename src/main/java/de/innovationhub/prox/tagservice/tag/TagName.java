@@ -26,6 +26,10 @@ package de.innovationhub.prox.tagservice.tag;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Pattern.Flag;
+import javax.validation.constraints.Size;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -40,6 +44,9 @@ public class TagName implements Comparable<TagName> {
   private static final int MAX_LENGTH = 40;
 
   @Column(length = MAX_LENGTH)
+  @Size(min = 1, max = MAX_LENGTH)
+  @NotBlank
+  @Pattern(regexp = "^\\P{C}*[^\\p{Z}\\p{C}]+\\P{C}*$", flags = {Flag.UNICODE_CASE})
   private String tagName;
 
   public TagName(String tagName) {
