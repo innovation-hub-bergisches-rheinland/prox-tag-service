@@ -5,7 +5,7 @@
   <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.2.5.RELEASE</version>
+    <version>2.3.4.RELEASE</version>
   </parent>
 
   <groupId>de.innovation-hub.prox</groupId>
@@ -19,16 +19,16 @@
     <changelist>-SNAPSHOT</changelist>
     <docker.image.prefix>docker.nexus.archi-lab.io/ihbr</docker.image.prefix>
     <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
-    <frontend-maven-plugin.nodeVersion>v13.2.0</frontend-maven-plugin.nodeVersion>
-    <frontend-maven-plugin.version>1.9.1</frontend-maven-plugin.version>
+    <frontend-maven-plugin.nodeVersion>v15.0.1</frontend-maven-plugin.nodeVersion>
+    <frontend-maven-plugin.version>1.10.3</frontend-maven-plugin.version>
     <java.version>11</java.version>
-    <keycloak.version>9.0.0</keycloak.version>
+    <keycloak.version>11.0.2</keycloak.version>
     <maven-toolchains-plugin.version>3.0.0</maven-toolchains-plugin.version>
     <revision>0.1.0</revision>
-    <sortpom-maven-plugin.version>2.11.0</sortpom-maven-plugin.version>
-    <spotless-maven-plugin.version>1.27.0</spotless-maven-plugin.version>
-    <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
-    <testContainers.postgresql.version>1.10.6</testContainers.postgresql.version>
+    <sortpom-maven-plugin.version>2.12.0</sortpom-maven-plugin.version>
+    <spotless-maven-plugin.version>2.5.0</spotless-maven-plugin.version>
+    <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
+    <testcontainers.version>1.15.0-rc2</testcontainers.version>
   </properties>
 
   <dependencyManagement>
@@ -84,6 +84,10 @@
       <artifactId>spring-boot-starter-security</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
     </dependency>
@@ -134,7 +138,7 @@
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>postgresql</artifactId>
-      <version>${testContainers.postgresql.version}</version>
+      <version>${testcontainers.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

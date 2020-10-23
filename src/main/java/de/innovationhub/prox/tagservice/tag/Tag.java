@@ -29,6 +29,8 @@ import de.innovationhub.prox.tagservice.core.AbstractEntity;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -38,7 +40,11 @@ import lombok.*;
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"tagName"})})
 public class Tag extends AbstractEntity implements Comparable<Tag> {
 
-  @Setter @JsonUnwrapped private TagName tagName;
+  @Setter
+  @JsonUnwrapped
+  @NotNull
+  @Valid
+  private TagName tagName;
 
   public Tag(TagName tagName) {
     this.tagName = tagName;

@@ -1,13 +1,13 @@
 const path = require("path");
 module.exports = {
   "*.java": [
-    absolutePaths => {
+    (absolutePaths) => {
       let resolvedPaths = absolutePaths;
 
       if (process.platform === "win32") {
         resolvedPaths = absolutePaths
-          .map(file => path.resolve(file))
-          .map(file => file.split("\\").join("\\\\"));
+          .map((file) => path.resolve(file))
+          .map((file) => file.split("\\").join("\\\\"));
         return `./mvnw.cmd spotless:apply -X -DspotlessFiles=${resolvedPaths.join(
           ","
         )}`;
@@ -17,7 +17,6 @@ module.exports = {
         ","
       )}`;
     },
-    "git add"
   ],
-  "*.{js,ts,css,scss,json,md,html,yml,yaml}": ["prettier --write", "git add"]
+  "*.{js,ts,css,scss,json,md,html,yml,yaml}": ["prettier --write"],
 };
