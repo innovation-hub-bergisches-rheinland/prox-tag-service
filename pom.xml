@@ -26,7 +26,7 @@
     <maven-toolchains-plugin.version>3.0.0</maven-toolchains-plugin.version>
     <revision>0.1.0</revision>
     <sortpom-maven-plugin.version>2.12.0</sortpom-maven-plugin.version>
-    <spotless-maven-plugin.version>1.27.0</spotless-maven-plugin.version>
+    <spotless-maven-plugin.version>2.5.0</spotless-maven-plugin.version>
     <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
     <testContainers.postgresql.version>1.10.6</testContainers.postgresql.version>
   </properties>
