@@ -28,7 +28,7 @@
     <sortpom-maven-plugin.version>2.12.0</sortpom-maven-plugin.version>
     <spotless-maven-plugin.version>2.5.0</spotless-maven-plugin.version>
     <spring-cloud.version>Hoxton.SR8</spring-cloud.version>
-    <testContainers.postgresql.version>1.10.6</testContainers.postgresql.version>
+    <testcontainers.version>1.15.0-rc2</testcontainers.version>
   </properties>
 
   <dependencyManagement>
@@ -138,7 +138,7 @@
     <dependency>
       <groupId>org.testcontainers</groupId>
       <artifactId>postgresql</artifactId>
-      <version>${testContainers.postgresql.version}</version>
+      <version>${testcontainers.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
