@@ -2,15 +2,19 @@ package de.innovationhub.prox.tagservice.config;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
+import com.netflix.discovery.EurekaClient;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import org.apache.commons.lang.ArrayUtils;
 import org.checkerframework.checker.nullness.qual.Nullable;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
@@ -19,6 +23,7 @@ import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.HttpAuthenticationScheme;
 import springfox.documentation.service.SecurityReference;
 import springfox.documentation.service.SecurityScheme;
+import springfox.documentation.service.Server;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spi.service.contexts.OperationContext;
 import springfox.documentation.spi.service.contexts.SecurityContext;
@@ -27,12 +32,29 @@ import springfox.documentation.spring.web.plugins.Docket;
 @Configuration
 public class SpringfoxConfig {
 
+  private final EurekaClient eurekaClient;
+
+  public SpringfoxConfig(@Qualifier("eurekaClient") EurekaClient eurekaClient) {
+    this.eurekaClient = eurekaClient;
+  }
+
+  @Bean
+  public WebMvcConfigurer corsConfigurer() {
+    return new WebMvcConfigurer() {
+      @Override
+      public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("*");
+      }
+    };
+  }
+
   @Bean
   public Docket api() {
     return new Docket(DocumentationType.OAS_30)
         .forCodeGeneration(true)
         .securityContexts(Collections.singletonList(securityContext()))
         .securitySchemes(Collections.singletonList(jwtScheme()))
+        .groupName("prox-tag-service")
         .select()
         .paths(PathSelectors.ant("/tags/**")
             .or(PathSelectors.ant("/tagCollections/**")))
