@@ -94,7 +94,7 @@ public class SpringfoxConfig {
               || methodSet.contains(RequestMethod.HEAD);
         } else if(input != null && input.getName() != null && input.getName().equals("tagCollectionTags")) {
           Set<RequestMethod> methodSet = input.supportedMethods();
-          return methodSet.contains(RequestMethod.PUT) || methodSet.contains(RequestMethod.POST); //NOTE PATCH is still displayed even if not supported
+          return methodSet.contains(RequestMethod.GET) || methodSet.contains(RequestMethod.PUT) || methodSet.contains(RequestMethod.POST); //NOTE PATCH is still displayed even if not supported
         } else if(input != null && input.getName() != null) {
           return !input.getName().equals("saveTagCollection") && !input.getName()
               .equals("tagCollectionTags") && !input.getName().equals("deleteTagCollection");
