@@ -54,7 +54,7 @@ public class SpringfoxConfig {
         .forCodeGeneration(true)
         .securityContexts(Collections.singletonList(securityContext()))
         .securitySchemes(Collections.singletonList(jwtScheme()))
-        .groupName("prox-tag-service")
+        .groupName("tag-service")
         .select()
         .paths(PathSelectors.ant("/tags/**")
             .or(PathSelectors.ant("/tagCollections/**")))
