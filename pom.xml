@@ -20,7 +20,7 @@
     <docker.image.prefix>docker.nexus.archi-lab.io/ihbr</docker.image.prefix>
     <dockerfile-maven-plugin.version>1.4.13</dockerfile-maven-plugin.version>
     <frontend-maven-plugin.nodeVersion>v15.0.1</frontend-maven-plugin.nodeVersion>
-    <frontend-maven-plugin.version>1.10.3</frontend-maven-plugin.version>
+    <frontend-maven-plugin.version>1.11.0</frontend-maven-plugin.version>
     <java.version>11</java.version>
     <keycloak.version>11.0.3</keycloak.version>
     <maven-toolchains-plugin.version>3.0.0</maven-toolchains-plugin.version>
