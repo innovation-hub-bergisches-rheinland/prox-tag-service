@@ -11,6 +11,8 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
-
   flyway:
     enabled: false
+keycloak:
+  auth-server-url: http://127.0.0.1:8080/auth
+
