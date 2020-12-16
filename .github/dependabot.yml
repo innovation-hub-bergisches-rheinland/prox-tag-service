@@ -6,10 +6,8 @@ updates:
     schedule:
       interval: "daily"
     target-branch: "dev"
-    ignored_updates:
-      - match:
-          # Slow Build: https://github.com/spotify/dockerfile-maven/issues/329
-          dependency_name: "com.spotify:dockerfile-maven-plugin"
+    ignore:
+      - dependency-name: "com.spotify:dockerfile-maven-plugin"
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
