@@ -31,6 +31,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.MediaTypes;
@@ -40,32 +42,54 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class ProjectClient {
-  private final Traverson traverson;
+  private Optional<Traverson> traversonInstance;
   private static final String PROJECT_SERVICE_ID = "project-service";
+  private static final Logger logger = LoggerFactory.getLogger(ProjectClient.class);
+  private final EurekaClient eurekaClient;
 
   @Autowired
   public ProjectClient(@Qualifier("eurekaClient") EurekaClient eurekaClient) {
-    URI serviceUri =
-        URI.create(
-            eurekaClient.getNextServerFromEureka(PROJECT_SERVICE_ID, false).getHomePageUrl());
-    this.traverson = new Traverson(serviceUri, MediaTypes.HAL_JSON);
+    this.eurekaClient = eurekaClient;
+    this.traversonInstance = getTraversonInstance();
   }
 
   public Optional<UUID> getCreatorIdOfProject(UUID projectId) {
-    Map<String, Object> parameters = new HashMap<>();
-    parameters.put("projectIds", projectId);
     try {
-      String creatorID =
-          traverson
-              .follow("projects", "search", "findAllByIds")
-              .withTemplateParameters(parameters)
-              .toObject("$._embedded.projects[0].creatorID");
-      UUID uuid = UUID.fromString(creatorID);
-      return Optional.of(uuid);
+      Traverson traverson;
+      if(traversonInstance.isPresent()) {
+        traverson = traversonInstance.get();
+      } else {
+        traverson = getTraversonInstance().orElseThrow(Exception::new);
+      }
+      Map<String, Object> parameters = new HashMap<>();
+      parameters.put("projectIds", projectId);
+        String creatorID =
+            traverson
+                .follow("projects", "search", "findAllByIds")
+                .withTemplateParameters(parameters)
+                .toObject("$._embedded.projects[0].creatorID");
+        UUID uuid = UUID.fromString(creatorID);
+        return Optional.of(uuid);
     } catch (Exception e) {
       log.error("Could not retrieve creatorID of projectId: " + projectId);
     }
 
+    return Optional.empty();
+  }
+
+  private Optional<Traverson> getTraversonInstance() {
+    return this.getProjectServiceUri().map(uri -> new Traverson(uri, MediaTypes.HAL_JSON));
+  }
+
+  private Optional<URI> getProjectServiceUri() {
+    try {
+      URI serviceUri =
+          URI.create(
+              eurekaClient.getNextServerFromEureka(PROJECT_SERVICE_ID, false).getHomePageUrl());
+      return Optional.of(serviceUri);
+    } catch(Exception e) {
+      logger.error("Could not retrieve " + PROJECT_SERVICE_ID + " URL from Eureka", e);
+    }
     return Optional.empty();
   }
 }
