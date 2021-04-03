@@ -6,9 +6,25 @@ node {
     def image
     def tag
 
-    def server = 'tcp://10.10.10.41:2376'
-    def certs = 'prox-prod-certs'
-    def tagPrefix = ''
+    def server
+    def certs
+    def tagPrefix
+
+    stage('Set dev Variables') {
+        if (env.JOB_BASE_NAME == 'prox-tag-service-dev') {
+            server = 'tcp://10.10.10.42:2376'
+            certs = 'prox-dev-certs'
+            tagPrefix = '-dev'
+        }
+    }
+
+    stage('Set master Variables') {
+        if (env.JOB_BASE_NAME == 'prox-tag-service') {
+            server = 'tcp://10.10.10.41:2376'
+            certs = 'prox-prod-certs'
+            tagPrefix = ''
+        }
+    }
 
     stage('Checkout') {
         checkout scm

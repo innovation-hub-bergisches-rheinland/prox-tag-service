@@ -39,6 +39,15 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 @KeycloakConfiguration
 class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
+  public static final String[] SWAGGER_PATHS = {
+      "/swagger-resources/**",
+      "/swagger-ui/**",
+      "/swagger-ui/",
+      "/v2/api-docs",
+      "/v3/api-docs"
+
+  };
+
   @Autowired
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
     KeycloakAuthenticationProvider keycloakAuthenticationProvider =
@@ -88,6 +97,8 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         .permitAll()
         .antMatchers(HttpMethod.POST, "/tagCollections/**")
         .denyAll()
+        .antMatchers(HttpMethod.GET, SWAGGER_PATHS)
+        .permitAll()
         .anyRequest()
         .denyAll();
   }
