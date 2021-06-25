@@ -26,7 +26,7 @@
     <keycloak.version>11.0.3</keycloak.version>
     <maven-toolchains-plugin.version>3.0.0</maven-toolchains-plugin.version>
     <revision>0.1.0</revision>
-    <sortpom-maven-plugin.version>2.12.0</sortpom-maven-plugin.version>
+    <sortpom-maven-plugin.version>3.0.0</sortpom-maven-plugin.version>
     <spotless-maven-plugin.version>2.12.1</spotless-maven-plugin.version>
     <spring-cloud.version>2020.0.2</spring-cloud.version>
     <testcontainers.version>1.15.3</testcontainers.version>
