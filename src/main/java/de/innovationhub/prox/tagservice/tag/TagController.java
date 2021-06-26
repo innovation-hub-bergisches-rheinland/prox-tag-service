@@ -24,7 +24,9 @@
 
 package de.innovationhub.prox.tagservice.tag;
 
+import io.swagger.annotations.ApiResponse;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -55,7 +57,7 @@ public class TagController {
 
   @GetMapping("/search/popularTags")
   public @ResponseBody
-  ResponseEntity<Iterable<TagCount>> popularTags(@RequestParam(required = false, defaultValue = "10", name = "limit") Integer limit) {
+  ResponseEntity<List<TagCount>> popularTags(@RequestParam(required = false, defaultValue = "10", name = "limit") Integer limit) {
     var popularTags = StreamSupport.stream(this.tagCollectionRepository.findAll().spliterator(), false)
         .flatMap(tagCollection -> tagCollection.getTags().stream())
         .collect(Collectors.groupingBy(tag -> tag, Collectors.counting()))
