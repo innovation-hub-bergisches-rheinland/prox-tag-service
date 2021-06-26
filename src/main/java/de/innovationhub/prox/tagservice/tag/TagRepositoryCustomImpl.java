@@ -32,7 +32,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 public class TagRepositoryCustomImpl implements TagRepositoryCustom {
 
-  @Autowired private TagRecommendationCalculator tagRecommendationCalculator;
+  private final TagRecommendationCalculator tagRecommendationCalculator;
+
+  @Autowired
+  public TagRepositoryCustomImpl(
+      TagRecommendationCalculator tagRecommendationCalculator
+  ) {
+    this.tagRecommendationCalculator = tagRecommendationCalculator;
+  }
 
   @Override
   public List<Tag> tagRecommendations(@RequestParam("tagIds") UUID[] tagIds) {
