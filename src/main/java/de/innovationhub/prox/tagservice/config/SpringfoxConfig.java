@@ -39,16 +39,6 @@ public class SpringfoxConfig {
   }
 
   @Bean
-  public WebMvcConfigurer corsConfigurer() {
-    return new WebMvcConfigurer() {
-      @Override
-      public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins("*");
-      }
-    };
-  }
-
-  @Bean
   public Docket api() {
     return new Docket(DocumentationType.OAS_30)
         .forCodeGeneration(true)
