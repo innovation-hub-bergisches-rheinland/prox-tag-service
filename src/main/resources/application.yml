@@ -25,6 +25,8 @@ spring:
     password: tag-service
     url: jdbc:postgresql://tag-db:5432/tag-db
     username: tag-service
+    hikari:
+      max-lifetime: 600000
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
