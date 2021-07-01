@@ -42,7 +42,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Slf4j
 public class ProjectClient {
-  private Optional<Traverson> traversonInstance;
   private static final String PROJECT_SERVICE_ID = "project-service";
   private static final Logger logger = LoggerFactory.getLogger(ProjectClient.class);
   private final EurekaClient eurekaClient;
@@ -50,15 +49,24 @@ public class ProjectClient {
   @Autowired
   public ProjectClient(@Qualifier("eurekaClient") EurekaClient eurekaClient) {
     this.eurekaClient = eurekaClient;
-    this.traversonInstance = getTraversonInstance();
   }
 
   public Optional<UUID> getCreatorIdOfProject(UUID projectId) {
     try {
       Traverson traverson;
+
+      /*
+       * TODO
+       * In a perfect world the Traverson instance would only be created from scratch when it is
+       * necessary. Hence the client would need to keep track about the instances health.
+       * Currently this is necessary in order to ensure that tags can be created when a project is
+       * created or edited. Alternatively an other bean scope would do the job.
+       */
+      var traversonInstance = this.getTraversonInstance();
       if(traversonInstance.isPresent()) {
         traverson = traversonInstance.get();
       } else {
+        log.error("Could not create Traverson instance");
         traverson = getTraversonInstance().orElseThrow(Exception::new);
       }
       Map<String, Object> parameters = new HashMap<>();
