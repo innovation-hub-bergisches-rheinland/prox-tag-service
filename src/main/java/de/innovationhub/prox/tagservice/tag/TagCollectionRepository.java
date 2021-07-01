@@ -33,6 +33,9 @@ public interface TagCollectionRepository extends PagingAndSortingRepository<TagC
   @Query("select tc.tags from TagCollection tc left join tc.tags")
   List<List<Tag>> findAllUsedTags();
 
-  @Query("select tc from TagCollection tc left join tc.tags t where lower(t.tagName.tagName) = lower(?1)")
-  List<TagCollection> findAllUsingTag(String tag);
+  @Query("select tc from TagCollection tc left join tc.tags t where t.id in (?1)")
+  List<TagCollection> findAllUsingTags(UUID[] tagIds);
+
+  @Query("select tc from TagCollection tc left join tc.tags t where t.tagName.tagName in (?1)")
+  List<TagCollection> findAllUsingTagsUsingName(String[] tags);
 }
