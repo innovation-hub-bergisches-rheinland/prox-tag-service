@@ -71,7 +71,7 @@ public class ProjectClient {
         UUID uuid = UUID.fromString(creatorID);
         return Optional.of(uuid);
     } catch (Exception e) {
-      log.error("Could not retrieve creatorID of projectId: " + projectId);
+      log.error("Could not retrieve creatorID of projectId: " + projectId, e);
     }
 
     return Optional.empty();
