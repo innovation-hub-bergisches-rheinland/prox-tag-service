@@ -32,4 +32,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface TagCollectionRepository extends PagingAndSortingRepository<TagCollection, UUID> {
   @Query("select tc.tags from TagCollection tc left join tc.tags")
   List<List<Tag>> findAllUsedTags();
+
+  @Query("select tc from TagCollection tc left join tc.tags t where lower(t.tagName.tagName) = lower(?1)")
+  List<TagCollection> findAllUsingTag(String tag);
 }
