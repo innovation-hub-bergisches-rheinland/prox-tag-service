@@ -18,8 +18,8 @@ node {
         }
     }
 
-    stage('Set master Variables') {
-        if (env.JOB_BASE_NAME == 'prox-tag-service') {
+    stage('Set production Variables') {
+        if (env.BRANCH_NAME == 'main') {
             server = 'tcp://10.10.10.41:2376'
             certs = 'prox-prod-certs'
             tagPrefix = ''
