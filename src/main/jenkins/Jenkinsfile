@@ -11,7 +11,7 @@ node {
     def tagPrefix
 
     stage('Set dev Variables') {
-        if (env.JOB_BASE_NAME == 'prox-tag-service-dev') {
+        if (env.BRANCH_NAME == 'dev') {
             server = 'tcp://10.10.10.42:2376'
             certs = 'prox-dev-certs'
             tagPrefix = '-dev'
