@@ -1,5 +1,6 @@
 package de.innovationhub.prox.tagservice.config;
 
+
 import de.innovationhub.prox.tagservice.utils.AuthenticationUtils;
 import de.innovationhub.prox.tagservice.utils.KeycloakAuthenticationUtils;
 import org.springframework.context.annotation.Bean;

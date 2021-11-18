@@ -1,5 +1,6 @@
 package de.innovationhub.prox.tagservice.config;
 
+
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
@@ -16,12 +17,7 @@ import org.springframework.security.web.authentication.session.SessionAuthentica
 class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
   public static final String[] SWAGGER_PATHS = {
-      "/swagger-resources/**",
-      "/swagger-ui/**",
-      "/swagger-ui/",
-      "/v2/api-docs",
-      "/v3/api-docs"
-
+    "/swagger-resources/**", "/swagger-ui/**", "/swagger-ui/", "/v2/api-docs", "/v3/api-docs"
   };
 
   @Autowired

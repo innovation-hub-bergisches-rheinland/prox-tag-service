@@ -1,5 +1,6 @@
 package de.innovationhub.prox.tagservice.tag;
 
+
 import de.innovationhub.prox.tagservice.tag.recommendation.TagRecommendationCalculator;
 import java.util.List;
 import java.util.UUID;
@@ -11,9 +12,7 @@ public class TagRepositoryCustomImpl implements TagRepositoryCustom {
   private final TagRecommendationCalculator tagRecommendationCalculator;
 
   @Autowired
-  public TagRepositoryCustomImpl(
-      TagRecommendationCalculator tagRecommendationCalculator
-  ) {
+  public TagRepositoryCustomImpl(TagRecommendationCalculator tagRecommendationCalculator) {
     this.tagRecommendationCalculator = tagRecommendationCalculator;
   }
 

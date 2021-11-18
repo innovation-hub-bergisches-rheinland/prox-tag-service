@@ -1,5 +1,6 @@
 package de.innovationhub.prox.tagservice.config;
 
+
 import javax.persistence.EntityManager;
 import javax.persistence.metamodel.Type;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,7 @@ public class RestConfig implements RepositoryRestConfigurer {
 
   @Autowired private EntityManager entityManager;
 
-  @Autowired
-  private LocalValidatorFactoryBean validator;
+  @Autowired private LocalValidatorFactoryBean validator;
 
   @Override
   public void configureValidatingRepositoryEventListener(
@@ -26,7 +26,8 @@ public class RestConfig implements RepositoryRestConfigurer {
   }
 
   @Override
-  public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry corsRegistry) {
+  public void configureRepositoryRestConfiguration(
+      RepositoryRestConfiguration config, CorsRegistry corsRegistry) {
     config.exposeIdsFor(
         this.entityManager.getMetamodel().getEntities().stream()
             .map(Type::getJavaType)

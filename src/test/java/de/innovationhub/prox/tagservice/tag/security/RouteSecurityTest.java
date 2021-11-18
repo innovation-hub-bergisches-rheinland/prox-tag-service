@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.innovationhub.prox.tagservice.net.ProjectClient;
 import org.junit.jupiter.api.BeforeEach;
-import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,8 +27,7 @@ public class RouteSecurityTest {
   @MockBean ProjectClient projectClient;
 
   @BeforeEach
-  void init() {
-  }
+  void init() {}
 
   void performRequest(
       HttpMethod httpMethod, String url, Object content, ResultMatcher expectedResult)

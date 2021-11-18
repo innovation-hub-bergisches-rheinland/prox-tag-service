@@ -1,5 +1,6 @@
 package de.innovationhub.prox.tagservice.core;
 
+
 import java.util.UUID;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;

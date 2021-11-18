@@ -1,5 +1,6 @@
 package de.innovationhub.prox.tagservice.config;
 
+
 import com.netflix.discovery.EurekaClient;
 import de.innovationhub.prox.tagservice.net.ProjectClient;
 import org.mockito.InjectMocks;

@@ -1,6 +1,5 @@
 package de.innovationhub.prox.tagservice.tag;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -16,8 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 class TagRepositoryTest {
 
-  @Autowired
-  TagRepository tagRepository;
+  @Autowired TagRepository tagRepository;
 
   @Test
   void when_find_tag_by_tag_name_ignore_case_should_ignore_case() {
@@ -40,5 +38,4 @@ class TagRepositoryTest {
     assertFalse(foundTags.isEmpty());
     assertTrue(foundTags.contains(tag));
   }
-
 }

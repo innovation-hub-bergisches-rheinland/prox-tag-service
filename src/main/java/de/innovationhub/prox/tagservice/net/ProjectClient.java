@@ -1,5 +1,6 @@
 package de.innovationhub.prox.tagservice.net;
 
+
 import com.netflix.discovery.EurekaClient;
 import java.net.URI;
 import java.util.HashMap;
@@ -39,7 +40,7 @@ public class ProjectClient {
        * created or edited. Alternatively an other bean scope would do the job.
        */
       var traversonInstance = this.getTraversonInstance();
-      if(traversonInstance.isPresent()) {
+      if (traversonInstance.isPresent()) {
         traverson = traversonInstance.get();
       } else {
         log.error("Could not create Traverson instance");
@@ -47,13 +48,13 @@ public class ProjectClient {
       }
       Map<String, Object> parameters = new HashMap<>();
       parameters.put("projectIds", projectId);
-        String creatorID =
-            traverson
-                .follow("projects", "search", "findAllByIds")
-                .withTemplateParameters(parameters)
-                .toObject("$._embedded.projects[0].creatorID");
-        UUID uuid = UUID.fromString(creatorID);
-        return Optional.of(uuid);
+      String creatorID =
+          traverson
+              .follow("projects", "search", "findAllByIds")
+              .withTemplateParameters(parameters)
+              .toObject("$._embedded.projects[0].creatorID");
+      UUID uuid = UUID.fromString(creatorID);
+      return Optional.of(uuid);
     } catch (Exception e) {
       log.error("Could not retrieve creatorID of projectId: " + projectId, e);
     }
@@ -71,7 +72,7 @@ public class ProjectClient {
           URI.create(
               eurekaClient.getNextServerFromEureka(PROJECT_SERVICE_ID, false).getHomePageUrl());
       return Optional.of(serviceUri);
-    } catch(Exception e) {
+    } catch (Exception e) {
       logger.error("Could not retrieve " + PROJECT_SERVICE_ID + " URL from Eureka", e);
     }
     return Optional.empty();

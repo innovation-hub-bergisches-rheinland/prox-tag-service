@@ -1,5 +1,6 @@
 package de.innovationhub.prox.tagservice.tag;
 
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.NotBlank;
@@ -22,7 +23,9 @@ public class TagName implements Comparable<TagName> {
   @Column(length = MAX_LENGTH)
   @Size(min = 1, max = MAX_LENGTH)
   @NotBlank
-  @Pattern(regexp = "^\\P{C}*[^\\p{Z}\\p{C}]+\\P{C}*$", flags = {Flag.UNICODE_CASE})
+  @Pattern(
+      regexp = "^\\P{C}*[^\\p{Z}\\p{C}]+\\P{C}*$",
+      flags = {Flag.UNICODE_CASE})
   private String tagName;
 
   public TagName(String tagName) {

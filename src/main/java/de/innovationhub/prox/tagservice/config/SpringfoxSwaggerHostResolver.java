@@ -1,5 +1,6 @@
 package de.innovationhub.prox.tagservice.config;
 
+
 import com.netflix.discovery.EurekaClient;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.servers.Server;
@@ -11,9 +12,7 @@ import springfox.documentation.oas.web.OpenApiTransformationContext;
 import springfox.documentation.oas.web.WebMvcOpenApiTransformationFilter;
 import springfox.documentation.spi.DocumentationType;
 
-/**
- * WORKAROUND for https://github.com/springfox/springfox/issues/3483
- */
+/** WORKAROUND for https://github.com/springfox/springfox/issues/3483 */
 @Component
 public class SpringfoxSwaggerHostResolver implements WebMvcOpenApiTransformationFilter {
 

@@ -1,5 +1,6 @@
 package de.innovationhub.prox.tagservice.tag.recommendation;
 
+
 import de.innovationhub.prox.tagservice.core.AbstractEntity;
 import de.innovationhub.prox.tagservice.tag.Tag;
 import javax.persistence.Entity;

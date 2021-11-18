@@ -27,66 +27,70 @@ public class TagAPIValidationTest {
   private static final String TAG_ROUTE = "/tags";
   private static final String TAG_ID_ROUTE = "/tags/{id}";
 
-  @Autowired
-  MockMvc mockMvc;
+  @Autowired MockMvc mockMvc;
 
   @Autowired TagRepository tagRepository;
 
-  @MockBean
-  AuthenticationUtils authenticationUtils;
-  
-  Tag emptyTag = new Tag();
-  
-  Tag nullValueTag = new Tag(null);
-  
-  Tag emptyValueTag = new Tag(new TagName("  "));
-  
-  Tag zwspValueTag = new Tag(new TagName("a\u200Bb"));
-  
-  Tag validTag = new Tag(new TagName("Tag 1"));
+  @MockBean AuthenticationUtils authenticationUtils;
 
+  Tag emptyTag = new Tag();
+
+  Tag nullValueTag = new Tag(null);
+
+  Tag emptyValueTag = new Tag(new TagName("  "));
+
+  Tag zwspValueTag = new Tag(new TagName("a\u200Bb"));
+
+  Tag validTag = new Tag(new TagName("Tag 1"));
 
   @Test
   void when_post_empty_body_then_is_bad_request() throws Exception {
-    mockMvc.perform(post(TAG_ROUTE)
-        .contentType(MediaType.APPLICATION_JSON)
-        .content("{}"))
+    mockMvc
+        .perform(post(TAG_ROUTE).contentType(MediaType.APPLICATION_JSON).content("{}"))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
 
   @Test
   void when_post_empty_tag_then_is_bad_request() throws Exception {
-    mockMvc.perform(post(TAG_ROUTE)
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(emptyTag)))
+    mockMvc
+        .perform(
+            post(TAG_ROUTE)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(emptyTag)))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
 
   @Test
   void when_post_null_tag_then_is_bad_request() throws Exception {
-    mockMvc.perform(post(TAG_ROUTE)
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(nullValueTag)))
+    mockMvc
+        .perform(
+            post(TAG_ROUTE)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(nullValueTag)))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
 
   @Test
   void when_post_empty_value_tag_then_is_bad_request() throws Exception {
-    mockMvc.perform(post(TAG_ROUTE)
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(emptyValueTag)))
+    mockMvc
+        .perform(
+            post(TAG_ROUTE)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(emptyValueTag)))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
 
   @Test
   void when_post_zwsp_value_tag_then_is_bad_request() throws Exception {
-    mockMvc.perform(post(TAG_ROUTE)
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(zwspValueTag)))
+    mockMvc
+        .perform(
+            post(TAG_ROUTE)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(zwspValueTag)))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
@@ -95,9 +99,11 @@ public class TagAPIValidationTest {
   void when_put_empty_body_then_is_bad_request() throws Exception {
     Tag savedTag = tagRepository.save(validTag);
 
-    mockMvc.perform(put(TAG_ID_ROUTE, savedTag.getId())
-        .contentType(MediaType.APPLICATION_JSON)
-        .content("{}"))
+    mockMvc
+        .perform(
+            put(TAG_ID_ROUTE, savedTag.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{}"))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
@@ -106,9 +112,11 @@ public class TagAPIValidationTest {
   void when_put_empty_tag_then_is_bad_request() throws Exception {
     Tag savedTag = tagRepository.save(validTag);
 
-    mockMvc.perform(put(TAG_ID_ROUTE, savedTag.getId())
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(emptyTag)))
+    mockMvc
+        .perform(
+            put(TAG_ID_ROUTE, savedTag.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(emptyTag)))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
@@ -117,9 +125,11 @@ public class TagAPIValidationTest {
   void when_put_null_tag_then_is_bad_request() throws Exception {
     Tag savedTag = tagRepository.save(validTag);
 
-    mockMvc.perform(put(TAG_ID_ROUTE, savedTag.getId())
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(nullValueTag)))
+    mockMvc
+        .perform(
+            put(TAG_ID_ROUTE, savedTag.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(nullValueTag)))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
@@ -128,9 +138,11 @@ public class TagAPIValidationTest {
   void when_put_empty_value_tag_then_is_bad_request() throws Exception {
     Tag savedTag = tagRepository.save(validTag);
 
-    mockMvc.perform(put(TAG_ID_ROUTE, savedTag.getId())
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(emptyValueTag)))
+    mockMvc
+        .perform(
+            put(TAG_ID_ROUTE, savedTag.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(emptyValueTag)))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
@@ -139,9 +151,11 @@ public class TagAPIValidationTest {
   void when_put_zwsp_value_tag_then_is_bad_request() throws Exception {
     Tag savedTag = tagRepository.save(validTag);
 
-    mockMvc.perform(put(TAG_ID_ROUTE, savedTag.getId())
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(zwspValueTag)))
+    mockMvc
+        .perform(
+            put(TAG_ID_ROUTE, savedTag.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(zwspValueTag)))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
@@ -150,9 +164,11 @@ public class TagAPIValidationTest {
   void when_patch_empty_body_then_is_bad_request() throws Exception {
     Tag savedTag = tagRepository.save(validTag);
 
-    mockMvc.perform(patch(TAG_ID_ROUTE, savedTag.getId())
-        .contentType(MediaType.APPLICATION_JSON)
-        .content("{}"))
+    mockMvc
+        .perform(
+            patch(TAG_ID_ROUTE, savedTag.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{}"))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
@@ -161,9 +177,11 @@ public class TagAPIValidationTest {
   void when_patch_empty_tag_then_is_bad_request() throws Exception {
     Tag savedTag = tagRepository.save(validTag);
 
-    mockMvc.perform(patch(TAG_ID_ROUTE, savedTag.getId())
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(emptyTag)))
+    mockMvc
+        .perform(
+            patch(TAG_ID_ROUTE, savedTag.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(emptyTag)))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
@@ -172,9 +190,11 @@ public class TagAPIValidationTest {
   void when_patch_null_tag_then_is_bad_request() throws Exception {
     Tag savedTag = tagRepository.save(validTag);
 
-    mockMvc.perform(patch(TAG_ID_ROUTE, savedTag.getId())
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(nullValueTag)))
+    mockMvc
+        .perform(
+            patch(TAG_ID_ROUTE, savedTag.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(nullValueTag)))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
@@ -183,9 +203,11 @@ public class TagAPIValidationTest {
   void when_patch_empty_value_tag_then_is_bad_request() throws Exception {
     Tag savedTag = tagRepository.save(validTag);
 
-    mockMvc.perform(patch(TAG_ID_ROUTE, savedTag.getId())
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(emptyValueTag)))
+    mockMvc
+        .perform(
+            patch(TAG_ID_ROUTE, savedTag.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(emptyValueTag)))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }
@@ -194,9 +216,11 @@ public class TagAPIValidationTest {
   void when_patch_zwsp_value_tag_then_is_bad_request() throws Exception {
     Tag savedTag = tagRepository.save(validTag);
 
-    mockMvc.perform(patch(TAG_ID_ROUTE, savedTag.getId())
-        .contentType(MediaType.APPLICATION_JSON)
-        .content(new ObjectMapper().writeValueAsString(zwspValueTag)))
+    mockMvc
+        .perform(
+            patch(TAG_ID_ROUTE, savedTag.getId())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(zwspValueTag)))
         .andDo(print())
         .andExpect(status().isBadRequest());
   }

@@ -12,8 +12,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @SpringBootTest
 public class TagValidationTest {
-  @Autowired
-  LocalValidatorFactoryBean localValidatorFactoryBean;
+  @Autowired LocalValidatorFactoryBean localValidatorFactoryBean;
 
   @Test
   void when_project_name_is_null_should_return_violation() {
@@ -50,5 +49,4 @@ public class TagValidationTest {
     Set<ConstraintViolation<Tag>> violationSet = localValidatorFactoryBean.validate(tag);
     assertTrue(violationSet.isEmpty());
   }
-
 }
