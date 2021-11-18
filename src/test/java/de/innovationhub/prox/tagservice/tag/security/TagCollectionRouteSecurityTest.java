@@ -40,7 +40,6 @@ public class TagCollectionRouteSecurityTest extends RouteSecurityTest {
     super.init();
     tagCollectionRepository.deleteAll();
     tagRepository.deleteAll();
-    MockitoAnnotations.initMocks(TagCollectionRouteSecurityTest.class);
     Mockito.when(authenticationUtils.getUserUUIDFromRequest(Mockito.any(HttpServletRequest.class)))
         .thenReturn(Optional.of(USER_ID));
   }

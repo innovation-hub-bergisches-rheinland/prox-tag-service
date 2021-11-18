@@ -37,7 +37,6 @@ class KeycloakAuthenticationUtilsTest {
 
   @BeforeEach
   private void init() {
-    MockitoAnnotations.initMocks(this);
     Mockito.when(keycloakAuthenticationToken.getAccount()).thenReturn(account);
     SecurityContextHolder.getContext().setAuthentication(keycloakAuthenticationToken);
     Mockito.when(account.getKeycloakSecurityContext()).thenReturn(keycloakSecurityContext);

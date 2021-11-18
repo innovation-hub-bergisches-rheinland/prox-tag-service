@@ -61,7 +61,6 @@ class ProjectClientTest {
 
   @BeforeEach
   void setUp() throws Exception {
-    MockitoAnnotations.initMocks(ProjectClientTest.class);
     this.wireMockServer =
         new WireMockServer(
             options().dynamicPort().extensions(new ResponseTemplateTransformer(false)));

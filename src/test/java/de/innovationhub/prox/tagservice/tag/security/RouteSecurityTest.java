@@ -29,7 +29,6 @@ public class RouteSecurityTest {
 
   @BeforeEach
   void init() {
-    MockitoAnnotations.initMocks(RouteSecurityTest.class);
   }
 
   void performRequest(

@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @RepositoryRestController
 @ExposesResourceFor(Tag.class)
-@RequestMapping("tags")
 public class TagController {
 
   private final TagCollectionRepository tagCollectionRepository;
