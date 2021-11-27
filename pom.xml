@@ -15,6 +15,13 @@
   <name>prox-tag-service</name>
   <description>Prox Tag Service</description>
 
+  <scm>
+    <!-- Probably it would be better to use SSH here, but that's out of scope for now -->
+    <developerConnection>scm:git:https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service</url>
+  </scm>
+
   <properties>
     <changelist>-SNAPSHOT</changelist>
     <docker.image.prefix>quay.io/innovation-hub-bergisches-rheinland</docker.image.prefix>
