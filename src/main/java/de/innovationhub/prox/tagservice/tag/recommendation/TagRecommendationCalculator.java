@@ -12,9 +12,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class TagRecommendationCalculator {
 
-  @Autowired private TagCounterRepository tagCounterRepository;
+  private final TagCounterRepository tagCounterRepository;
+  private final TagRepository tagRepository;
 
-  @Autowired private TagRepository tagRepository;
+  @Autowired
+  public TagRecommendationCalculator(TagCounterRepository tagCounterRepository, TagRepository tagRepository) {
+    this.tagCounterRepository = tagCounterRepository;
+    this.tagRepository = tagRepository;
+  }
 
   @Value("${tagRecommendationCalculation.resultCount}")
   private int resultCount;
