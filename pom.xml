@@ -27,7 +27,7 @@
     <frontend-maven-plugin.nodeVersion>v16.13.0</frontend-maven-plugin.nodeVersion>
     <frontend-maven-plugin.version>1.12.0</frontend-maven-plugin.version>
     <java.version>17</java.version>
-    <keycloak.version>11.0.3</keycloak.version>
+    <keycloak.version>15.0.2</keycloak.version>
     <maven-toolchains-plugin.version>3.0.0</maven-toolchains-plugin.version>
     <spotless-maven-plugin.version>2.17.4</spotless-maven-plugin.version>
     <spring-cloud.version>2020.0.4</spring-cloud.version>
