@@ -10,7 +10,7 @@
 
   <groupId>de.innovation-hub.prox</groupId>
   <artifactId>prox-tag-service</artifactId>
-  <version>0.3.0</version>
+  <version>0.3.1-SNAPSHOT</version>
 
   <name>prox-tag-service</name>
   <description>Prox Tag Service</description>
@@ -18,7 +18,7 @@
   <scm>
     <!-- Probably it would be better to use SSH here, but that's out of scope for now -->
     <developerConnection>scm:git:https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service.git</developerConnection>
-    <tag>v0.3.0</tag>
+    <tag>HEAD</tag>
     <url>https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service</url>
   </scm>
 
