@@ -1,0 +1,49 @@
+{{- if not .Values.config.existingConfigMap }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "prox-tag-service.fullname" . }}
+  labels:
+    {{- include "prox-tag-service.labels" . | nindent 4 }}
+data:
+  application.yml: |-
+    eureka:
+      client:
+        serviceUrl:
+          defaultZone: http://prox-service-discovery:8761/eureka/
+      instance:
+        hostname: prox-tag-service
+    tagRecommendationCalculation:
+      resultCount: 15
+    keycloak:
+      auth-server-url: https://login.aws.innovation-hub.de/auth
+      bearer-only: true
+      cors: false
+      principal-attribute: preferred_username
+      realm: archilab
+      resource: prox-tag-service
+    server:
+      port: 9003
+      forward-headers-strategy: native
+    spring:
+      application:
+        name: tag-service
+      data:
+        rest:
+          max-page-size: 1000000000
+          default-page-size: 1000000000
+      datasource:
+        url: jdbc:postgresql://prox-tag-service-db:5432/postgres
+        username: postgres
+        hikari:
+          max-lifetime: 600000
+      jpa:
+        database-platform: org.hibernate.dialect.PostgreSQLDialect
+        hibernate:
+          ddl-auto: validate
+        properties:
+          hibernate:
+            jdbc:
+              lob:
+                non_contextual_creation: true
+{{- end }}
