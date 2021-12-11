@@ -307,7 +307,6 @@
             <artifactId>spotless-maven-plugin</artifactId>
             <version>${spotless-maven-plugin.version}</version>
             <configuration>
-              <ratchetFrom>origin/main</ratchetFrom>
               <java>
                 <googleJavaFormat>
                   <version>1.12.0</version>
