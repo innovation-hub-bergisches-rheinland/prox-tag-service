@@ -198,6 +198,13 @@
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>
         <configuration>
           <skip>true</skip>
@@ -366,31 +373,6 @@
       <id>release</id>
       <build>
         <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-release-plugin</artifactId>
-            <version>2.5.3</version>
-            <configuration>
-              <tagNameFormat>v@{project.version}</tagNameFormat>
-              <allowTimestampedSnapshots>false</allowTimestampedSnapshots>
-              <scmCommentPrefix xml:space="preserve">build: </scmCommentPrefix>
-            </configuration>
-          </plugin>
-          <plugin>
-            <groupId>com.smartling.cc4j</groupId>
-            <artifactId>conventional-commits-maven-plugin</artifactId>
-            <version>0.2.0</version>
-            <inherited>false</inherited>
-            <executions>
-              <execution>
-                <id>version</id>
-                <goals>
-                  <goal>version</goal>
-                </goals>
-                <phase>verify</phase>
-              </execution>
-            </executions>
-          </plugin>
           <plugin>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-maven-plugin</artifactId>
