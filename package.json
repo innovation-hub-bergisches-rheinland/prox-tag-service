@@ -12,7 +12,8 @@
     "@commitlint/cli": "^15.0.0",
     "@commitlint/config-conventional": "^15.0.0",
     "standard-version": "^9.3.2",
-    "cz-conventional-changelog": "^3.3.0"
+    "cz-conventional-changelog": "^3.3.0",
+    "@map-colonies/standard-version-update-helm-version": "^2.0.1"
   },
   "config": {
     "commitizen": {
