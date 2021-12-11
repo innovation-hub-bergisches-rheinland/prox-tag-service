@@ -4,7 +4,8 @@
   "version": "0.1.0",
   "scripts": {
     "prepare": "husky install",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "release": "standard-version"
   },
   "devDependencies": {
     "@commitlint/cli": "^15.0.0",
