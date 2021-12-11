@@ -10,7 +10,7 @@
 
   <groupId>de.innovation-hub.prox</groupId>
   <artifactId>prox-tag-service</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>1.0.0</version>
 
   <name>prox-tag-service</name>
   <description>Prox Tag Service</description>
