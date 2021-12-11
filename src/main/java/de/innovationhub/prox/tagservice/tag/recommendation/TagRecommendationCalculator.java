@@ -16,7 +16,8 @@ public class TagRecommendationCalculator {
   private final TagRepository tagRepository;
 
   @Autowired
-  public TagRecommendationCalculator(TagCounterRepository tagCounterRepository, TagRepository tagRepository) {
+  public TagRecommendationCalculator(
+      TagCounterRepository tagCounterRepository, TagRepository tagRepository) {
     this.tagCounterRepository = tagCounterRepository;
     this.tagRepository = tagRepository;
   }
