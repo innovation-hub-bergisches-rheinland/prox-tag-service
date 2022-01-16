@@ -10,6 +10,7 @@ import org.springframework.data.rest.webmvc.RepositoryRestController;
 import org.springframework.hateoas.server.ExposesResourceFor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -24,7 +25,7 @@ public class TagController {
     this.tagCollectionRepository = tagCollectionRepository;
   }
 
-  @GetMapping("/search/popularTags")
+  @GetMapping("tags/search/popularTags")
   public @ResponseBody ResponseEntity<List<TagCount>> popularTags(
       @RequestParam(required = false, defaultValue = "10", name = "limit") Integer limit) {
     var popularTags =
