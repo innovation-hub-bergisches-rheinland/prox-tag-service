@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class TagRecommendationCalculator {
 
-  private final TagCounterRepository tagCounterRepository;
-  private final TagRepository tagRepository;
+  private TagCounterRepository tagCounterRepository;
+  private TagRepository tagRepository;
 
   @Autowired
   public TagRecommendationCalculator(
