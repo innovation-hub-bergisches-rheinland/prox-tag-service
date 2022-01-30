@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.3](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v1.0.2...v1.0.3) (2022-01-30)
+
+
+### Bug Fixes
+
+* perform lazy injection ([af7e3aa](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/commit/af7e3aa9069d19eedab4426cac17a6c1c65df1e6))
+
 ### [1.0.2](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v1.0.1...v1.0.2) (2022-01-16)
 
 
