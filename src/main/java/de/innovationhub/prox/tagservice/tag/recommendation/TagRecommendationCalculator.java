@@ -7,6 +7,7 @@ import java.util.*;
 import java.util.Map.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,6 +17,7 @@ public class TagRecommendationCalculator {
   private TagRepository tagRepository;
 
   @Autowired
+  @Lazy
   public TagRecommendationCalculator(
       TagCounterRepository tagCounterRepository, TagRepository tagRepository) {
     this.tagCounterRepository = tagCounterRepository;
