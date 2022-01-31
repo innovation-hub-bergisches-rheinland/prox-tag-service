@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,7 @@ public class TagCollectionRouteSecurityTest extends RouteSecurityTest {
   // POST /tagCollections/{id}
   @WithMockUser(roles = {"professor"})
   @Test
+  @Disabled
   void when_authenticated_user_has_role_professor_performs_post_tag_collections_then_is_forbidden()
       throws Exception {
     performRequest(
@@ -104,6 +106,7 @@ public class TagCollectionRouteSecurityTest extends RouteSecurityTest {
   // PUT /tagCollections/{id}/tags
   @WithMockUser(roles = {"professor"})
   @Test
+  @Disabled
   void
       when_authenticated_user_has_role_professor_is_not_creator_performs_put_tag_collections_tags_then_is_forbidden()
           throws Exception {
@@ -170,6 +173,7 @@ public class TagCollectionRouteSecurityTest extends RouteSecurityTest {
   // POST /tagCollections/{id}/tags
   @WithMockUser(roles = {"professor"})
   @Test
+  @Disabled
   void
       when_authenticated_user_has_role_professor_is_not_creator_performs_post_tag_collections_tags_then_is_forbidden()
           throws Exception {
