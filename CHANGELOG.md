@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.4](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v1.0.3...v1.0.4) (2022-01-31)
+
+
+### Bug Fixes
+
+* disable creator check ([d933996](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/commit/d933996c8b6d72d44f66a941ea4b4181185d415c))
+
 ### [1.0.3](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v1.0.2...v1.0.3) (2022-01-30)
 
 
