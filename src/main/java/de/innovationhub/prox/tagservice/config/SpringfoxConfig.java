@@ -1,13 +1,10 @@
 package de.innovationhub.prox.tagservice.config;
 
 
-import com.google.common.base.Predicate;
-import com.netflix.discovery.EurekaClient;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import org.checkerframework.checker.nullness.qual.Nullable;
-import org.springframework.beans.factory.annotation.Qualifier;
+import java.util.function.Predicate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -24,13 +21,6 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 @Configuration
 public class SpringfoxConfig {
-
-  private final EurekaClient eurekaClient;
-
-  public SpringfoxConfig(@Qualifier("eurekaClient") EurekaClient eurekaClient) {
-    this.eurekaClient = eurekaClient;
-  }
-
   @Bean
   public Docket api() {
     return new Docket(DocumentationType.OAS_30)
@@ -59,11 +49,10 @@ public class SpringfoxConfig {
     return HttpAuthenticationScheme.JWT_BEARER_BUILDER.name("JWT").build();
   }
 
-  // TODO Remove when Controllers are implemented and use Swagger/Springfox annotations instead
-  private java.util.function.Predicate<RequestHandler> customRequestHandlers() {
-    return new Predicate<>() {
+  private Predicate<RequestHandler> customRequestHandlers() {
+    return new Predicate<RequestHandler>() {
       @Override
-      public boolean apply(@Nullable RequestHandler input) {
+      public boolean test(RequestHandler input) {
         if (input != null
             && input.getName() != null
             && input.getName().equals("findAllTagCollection")) {
@@ -78,7 +67,7 @@ public class SpringfoxConfig {
           return methodSet.contains(RequestMethod.GET)
               || methodSet.contains(RequestMethod.PUT)
               || methodSet.contains(
-                  RequestMethod.POST); // NOTE PATCH is still displayed even if not supported
+              RequestMethod.POST); // NOTE PATCH is still displayed even if not supported
         } else if (input != null && input.getName() != null) {
           return !input.getName().equals("saveTagCollection")
               && !input.getName().equals("tagCollectionTags")
