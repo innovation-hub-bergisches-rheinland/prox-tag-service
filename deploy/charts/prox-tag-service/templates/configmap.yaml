@@ -7,12 +7,6 @@ metadata:
     {{- include "prox-tag-service.labels" . | nindent 4 }}
 data:
   application.yml: |-
-    eureka:
-      client:
-        serviceUrl:
-          defaultZone: http://prox-service-discovery:8761/eureka/
-      instance:
-        hostname: prox-tag-service
     tagRecommendationCalculation:
       resultCount: 15
     keycloak:
@@ -46,4 +40,8 @@ data:
             jdbc:
               lob:
                 non_contextual_creation: true
+    prox:
+      services:
+        project-service:
+          url: https://api.prox.aws.innovation-hub.de
   {{- end }}

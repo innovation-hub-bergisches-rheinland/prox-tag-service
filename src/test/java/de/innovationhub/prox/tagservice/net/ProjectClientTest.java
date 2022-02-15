@@ -12,10 +12,9 @@ import static org.mockito.Mockito.when;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer;
-import com.netflix.appinfo.InstanceInfo;
-import com.netflix.discovery.EurekaClient;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,14 +32,7 @@ import org.springframework.util.ResourceUtils;
 @SpringBootTest
 @ContextConfiguration(classes = {ProjectClientTest.class})
 class ProjectClientTest {
-  private static final String PROJECT_SERVICE_ID = "project-service";
   private static final String UUID_REGEX = "[a-f0-9]{8}(-[a-f0-9]{4}){4}[a-f0-9]{8}";
-
-  @MockBean
-  @Qualifier("eurekaClient")
-  EurekaClient eurekaClient;
-
-  @Mock InstanceInfo instanceInfo;
 
   WireMockServer wireMockServer;
   ProjectClient projectClient;
@@ -91,11 +83,8 @@ class ProjectClientTest {
 
     this.wireMockServer.start();
     String wireMockUrl = this.wireMockServer.baseUrl();
-    when(instanceInfo.getHomePageUrl()).thenReturn(wireMockUrl);
-    when(eurekaClient.getNextServerFromEureka(eq(PROJECT_SERVICE_ID), anyBoolean()))
-        .thenReturn(instanceInfo);
 
-    projectClient = new ProjectClient(eurekaClient);
+    projectClient = new ProjectClient(new URI(wireMockUrl));
   }
 
   @Test

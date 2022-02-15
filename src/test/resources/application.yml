@@ -1,6 +1,3 @@
-eureka:
-  client:
-    enabled: false
 tagRecommendationCalculation:
   resultCount: 15
 # TODO Keycloak Config necessary?
@@ -31,3 +28,7 @@ spring:
             non_contextual_creation: true
   flyway:
     enabled: false
+prox:
+  services:
+    project-service:
+      url: https://api.prox.aws.innovation-hub.de
