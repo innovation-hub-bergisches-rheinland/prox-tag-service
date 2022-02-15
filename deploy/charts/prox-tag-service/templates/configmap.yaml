@@ -23,7 +23,7 @@ data:
       realm: archilab
       resource: prox-tag-service
     server:
-      port: 9003
+      port: 8080
       forward-headers-strategy: native
     spring:
       application:

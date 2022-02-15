@@ -12,7 +12,7 @@ keycloak:
   realm: innovation-hub-bergisches-rheinland
   resource: prox-tag-service
 server:
-  port: 9003
+  port: 8080
   forward-headers-strategy: native
 spring:
   application:
