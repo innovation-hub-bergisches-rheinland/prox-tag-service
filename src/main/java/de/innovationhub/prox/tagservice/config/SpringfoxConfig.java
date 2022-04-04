@@ -67,7 +67,7 @@ public class SpringfoxConfig {
           return methodSet.contains(RequestMethod.GET)
               || methodSet.contains(RequestMethod.PUT)
               || methodSet.contains(
-              RequestMethod.POST); // NOTE PATCH is still displayed even if not supported
+                  RequestMethod.POST); // NOTE PATCH is still displayed even if not supported
         } else if (input != null && input.getName() != null) {
           return !input.getName().equals("saveTagCollection")
               && !input.getName().equals("tagCollectionTags")

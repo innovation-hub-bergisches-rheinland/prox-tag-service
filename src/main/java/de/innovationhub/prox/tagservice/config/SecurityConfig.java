@@ -59,14 +59,11 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         .antMatchers(HttpMethod.DELETE, "/tagCollections/**")
         .denyAll()
         .antMatchers("/tagCollections/{id}/**")
-        .access(
-            "hasRole('professor')")
+        .access("hasRole('professor')")
         .antMatchers(HttpMethod.POST, "/tagCollections/{id}/tags/**")
-        .access(
-            "hasRole('professor')")
+        .access("hasRole('professor')")
         .antMatchers(HttpMethod.PUT, "/tagCollections/{id}/tags/**")
-        .access(
-            "hasRole('professor')")
+        .access("hasRole('professor')")
         .antMatchers(HttpMethod.GET, "/tagRecommendations/**")
         .permitAll()
         .antMatchers(HttpMethod.POST, "/tagCollections/**")
