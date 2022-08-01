@@ -26,6 +26,10 @@ public class TagCollection {
     this.referencedEntity = referencedEntity;
   }
 
+  public void addTags(Iterable<Tag> tags) {
+    tags.forEach(this::addTag);
+  }
+
   public void addTag(Tag tag) {
     if (!this.tags.contains(tag)) this.tags.add(tag);
   }

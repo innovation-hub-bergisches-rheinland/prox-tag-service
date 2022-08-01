@@ -1,5 +1,3 @@
-tagRecommendationCalculation:
-  resultCount: 15
 keycloak:
   auth-server-url: https://login.aws.innovation-hub.de/auth
   bearer-only: true

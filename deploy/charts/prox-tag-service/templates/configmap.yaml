@@ -7,8 +7,6 @@ metadata:
     {{- include "prox-tag-service.labels" . | nindent 4 }}
 data:
   application.yml: |-
-    tagRecommendationCalculation:
-      resultCount: 15
     keycloak:
       auth-server-url: https://login.aws.innovation-hub.de/auth
       bearer-only: true
