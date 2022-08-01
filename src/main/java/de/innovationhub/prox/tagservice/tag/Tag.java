@@ -15,17 +15,13 @@ import lombok.*;
 @ToString(callSuper = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"tagName"})})
+@EqualsAndHashCode
 public class Tag extends AbstractEntity implements Comparable<Tag> {
 
   @Setter @JsonUnwrapped @NotNull @Valid private TagName tagName;
 
   public Tag(TagName tagName) {
     this.tagName = tagName;
-  }
-
-  @Override
-  public int hashCode() {
-    return getId().hashCode();
   }
 
   @Override

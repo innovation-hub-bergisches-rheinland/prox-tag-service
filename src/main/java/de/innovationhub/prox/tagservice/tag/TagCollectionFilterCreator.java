@@ -13,7 +13,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class TagCollectionFilterCreator implements Filter {
 
-  @Autowired private TagCollectionRepository tagCollectionRepository;
+  private final TagCollectionRepository tagCollectionRepository;
+
+  public TagCollectionFilterCreator(TagCollectionRepository tagCollectionRepository) {
+    this.tagCollectionRepository = tagCollectionRepository;
+  }
 
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
@@ -21,15 +25,14 @@ public class TagCollectionFilterCreator implements Filter {
 
     HttpServletRequest req = (HttpServletRequest) request;
 
-    // Create a Pattern object
+    // Pattern with capture group on the tag collection id in the url
     Pattern r = Pattern.compile("\\/tagCollections\\/(.*)\\/tags");
-
-    // Now create matcher object.
     Matcher m = r.matcher(req.getRequestURI());
 
+    // If we don't have a tag collection with this particular id, we create one.
     if (m.find()) {
       UUID tagCollectionId = UUID.fromString(m.group(1));
-      if (!tagCollectionRepository.findById(tagCollectionId).isPresent()) {
+      if (!tagCollectionRepository.existsById(tagCollectionId)) {
         tagCollectionRepository.save(new TagCollection(tagCollectionId));
       }
     }

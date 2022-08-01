@@ -1,6 +1,7 @@
 package de.innovationhub.prox.tagservice.tag;
 
 
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
@@ -29,14 +30,14 @@ public class TagController {
       @RequestParam(required = false, defaultValue = "10", name = "limit") Integer limit) {
     var popularTags =
         this.tagCollectionRepository.findAllUsedTags().stream()
-            .flatMap(t -> t.stream())
+            .flatMap(Collection::stream)
             .collect(Collectors.groupingBy(tag -> tag, Collectors.counting()))
             .entrySet()
             .stream()
-            .sorted(Comparator.comparing(Entry::getValue, Comparator.reverseOrder()))
+            .sorted(Entry.comparingByValue(Comparator.reverseOrder()))
             .limit(limit)
             .map(entry -> new TagCount(entry.getKey(), entry.getValue()))
-            .collect(Collectors.toList());
+            .toList();
 
     return ResponseEntity.ok(popularTags);
   }

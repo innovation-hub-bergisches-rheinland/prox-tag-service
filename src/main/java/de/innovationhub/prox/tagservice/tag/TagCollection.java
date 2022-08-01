@@ -2,7 +2,9 @@ package de.innovationhub.prox.tagservice.tag;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,7 +22,7 @@ public class TagCollection {
   // Project
   @Id private UUID referencedEntity;
 
-  @ManyToMany private List<Tag> tags = new ArrayList<>();
+  @ManyToMany private Set<Tag> tags = new HashSet<>();
 
   public TagCollection(UUID referencedEntity) {
     this.referencedEntity = referencedEntity;
@@ -31,6 +33,6 @@ public class TagCollection {
   }
 
   public void addTag(Tag tag) {
-    if (!this.tags.contains(tag)) this.tags.add(tag);
+    this.tags.add(tag);
   }
 }

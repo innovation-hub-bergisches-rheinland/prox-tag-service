@@ -1,5 +1,6 @@
 package de.innovationhub.prox.tagservice.tag;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -15,6 +16,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,8 +61,8 @@ class TagCollectionAPITest {
     UUID projectId = UUID.randomUUID();
     Tag tag1 = new Tag(new TagName("Tag1"));
     Tag tag2 = new Tag(new TagName("Tag2"));
-    TagCollection tagCollection = new TagCollection(projectId, Arrays.asList(tag1, tag2));
-    tagRepository.saveAll(Arrays.asList(tag1, tag2));
+    TagCollection tagCollection = new TagCollection(projectId, Set.of(tag1, tag2));
+    tagRepository.saveAll(Set.of(tag1, tag2));
     tagCollectionRepository.save(tagCollection);
 
     MvcResult mvcResult =
@@ -80,8 +82,8 @@ class TagCollectionAPITest {
     UUID projectId = UUID.randomUUID();
     Tag tag1 = new Tag(new TagName("Tag1"));
     Tag tag2 = new Tag(new TagName("Tag2"));
-    TagCollection tagCollection = new TagCollection(projectId, Arrays.asList(tag1, tag2));
-    tagRepository.saveAll(Arrays.asList(tag1, tag2));
+    TagCollection tagCollection = new TagCollection(projectId, Set.of(tag1, tag2));
+    tagRepository.saveAll(Set.of(tag1, tag2));
     tagCollectionRepository.save(tagCollection);
 
     mockMvc
@@ -97,18 +99,16 @@ class TagCollectionAPITest {
     UUID projectId = UUID.randomUUID();
     Tag tag1 = new Tag(new TagName("Tag1"));
     Tag tag2 = new Tag(new TagName("Tag2"));
-    TagCollection tagCollection = new TagCollection(projectId, Arrays.asList(tag1, tag2));
-    tagRepository.saveAll(Arrays.asList(tag1, tag2));
+    TagCollection tagCollection = new TagCollection(projectId, Set.of(tag1, tag2));
+    tagRepository.saveAll(Set.of(tag1, tag2));
     tagCollectionRepository.save(tagCollection);
 
     mockMvc
         .perform(get(TAG_COLLECTIONS_ID_TAGS_ROUTE, projectId))
         .andDo(print())
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$._embedded.tags[0].id").value(tag1.getId().toString()))
-        .andExpect(jsonPath("$._embedded.tags[0].tagName").value(tag1.getTagName().getTagName()))
-        .andExpect(jsonPath("$._embedded.tags[1].id").value(tag2.getId().toString()))
-        .andExpect(jsonPath("$._embedded.tags[1].tagName").value(tag2.getTagName().getTagName()));
+        .andExpect(jsonPath("$._embedded.tags[*].id", containsInAnyOrder(tag1.getId().toString(), tag2.getId().toString())))
+        .andExpect(jsonPath("$._embedded.tags[*].tagName", containsInAnyOrder(tag1.getTagName().getTagName(), tag2.getTagName().getTagName())));
   }
 
   // DELETE /tagCollections/{id}
@@ -117,8 +117,8 @@ class TagCollectionAPITest {
     UUID projectId = UUID.randomUUID();
     Tag tag1 = new Tag(new TagName("Tag1"));
     Tag tag2 = new Tag(new TagName("Tag2"));
-    TagCollection tagCollection = new TagCollection(projectId, Arrays.asList(tag1, tag2));
-    tagRepository.saveAll(Arrays.asList(tag1, tag2));
+    TagCollection tagCollection = new TagCollection(projectId, Set.of(tag1, tag2));
+    tagRepository.saveAll(Set.of(tag1, tag2));
     tagCollectionRepository.save(tagCollection);
 
     mockMvc
@@ -153,12 +153,12 @@ class TagCollectionAPITest {
   void when_post_tag_collections_id_tags_then_found() throws Exception {
     Tag tag1 = new Tag(new TagName("Tag1"));
     Tag tag2 = new Tag(new TagName("Tag2"));
-    tagRepository.saveAll(Arrays.asList(tag1, tag2));
+    tagRepository.saveAll(Set.of(tag1, tag2));
 
     UUID projectId = UUID.randomUUID();
     TagCollection tagCollection = new TagCollection(projectId);
     tagCollectionRepository.save(tagCollection);
-    tagCollection.getTags().addAll(Arrays.asList(tag1, tag2));
+    tagCollection.getTags().addAll(Set.of(tag1, tag2));
 
     String linkToTag1 = entityLinks.linkToItemResource(Tag.class, tag1.getId()).expand().getHref();
     String linkToTag2 = entityLinks.linkToItemResource(Tag.class, tag2.getId()).expand().getHref();
@@ -185,15 +185,15 @@ class TagCollectionAPITest {
   void when_put_tag_collections_id_tags_then_found() throws Exception {
     Tag tag1 = new Tag(new TagName("Tag1"));
     Tag tag2 = new Tag(new TagName("Tag2"));
-    tagRepository.saveAll(Arrays.asList(tag1, tag2));
+    tagRepository.saveAll(Set.of(tag1, tag2));
     UUID projectId = UUID.randomUUID();
-    TagCollection tagCollection = new TagCollection(projectId, Arrays.asList(tag1, tag2));
+    TagCollection tagCollection = new TagCollection(projectId, Set.of(tag1, tag2));
     tagCollectionRepository.save(tagCollection);
 
     Tag newTag1 = new Tag(new TagName("NewTag1"));
     Tag newTag2 = new Tag(new TagName("NewTag2"));
-    tagRepository.saveAll(Arrays.asList(newTag1, newTag2));
-    TagCollection newTagCollection = new TagCollection(projectId, Arrays.asList(newTag1, newTag2));
+    tagRepository.saveAll(Set.of(newTag1, newTag2));
+    TagCollection newTagCollection = new TagCollection(projectId, Set.of(newTag1, newTag2));
 
     String linkToTag1 =
         entityLinks.linkToItemResource(Tag.class, newTag1.getId()).expand().getHref();
@@ -219,15 +219,15 @@ class TagCollectionAPITest {
   void when_patch_tag_collections_id_tags_then_found() throws Exception {
     Tag tag1 = new Tag(new TagName("Tag1"));
     Tag tag2 = new Tag(new TagName("Tag2"));
-    tagRepository.saveAll(Arrays.asList(tag1, tag2));
+    tagRepository.saveAll(Set.of(tag1, tag2));
     UUID projectId = UUID.randomUUID();
-    TagCollection tagCollection = new TagCollection(projectId, Arrays.asList(tag1, tag2));
+    TagCollection tagCollection = new TagCollection(projectId, Set.of(tag1, tag2));
     tagCollectionRepository.save(tagCollection);
 
     Tag newTag1 = new Tag(new TagName("NewTag1"));
     tagRepository.saveAll(Collections.singleton(newTag1));
     TagCollection newTagCollection =
-        new TagCollection(projectId, Arrays.asList(tag1, tag2, newTag1));
+        new TagCollection(projectId, Set.of(tag1, tag2, newTag1));
 
     String linkToTag1 =
         entityLinks.linkToItemResource(Tag.class, newTag1.getId()).expand().getHref();
