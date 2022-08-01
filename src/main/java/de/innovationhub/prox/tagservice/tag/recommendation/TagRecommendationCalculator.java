@@ -5,6 +5,7 @@ import de.innovationhub.prox.tagservice.tag.Tag;
 import de.innovationhub.prox.tagservice.tag.TagRepository;
 import java.util.*;
 import java.util.Map.Entry;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
@@ -36,36 +37,23 @@ public class TagRecommendationCalculator {
     }
 
     // Score Tags
-    Map<Tag, Integer> recommendedTags = new HashMap<>();
-    for (Tag searchTag : searchTags) {
-      List<TagCounter> tagCounters = tagCounterRepository.findByTag1OrTag2(searchTag, searchTag);
-      for (TagCounter tagCounter : tagCounters) {
-        Tag otherTag = tagCounter.getOtherTag(searchTag);
-        if (!searchTags.contains(otherTag)) {
-          Integer count = recommendedTags.get(otherTag);
-          if (count == null) {
-            recommendedTags.put(otherTag, tagCounter.getCount());
-          } else {
-            recommendedTags.put(otherTag, count + tagCounter.getCount());
-          }
-        }
-      }
-    }
+    Map<Tag, Integer> recommendedTags = searchTags.stream()
+        .flatMap(tag ->
+            tagCounterRepository.findByTag1OrTag2(tag, tag)
+                .stream()
+                .filter(tagCounter -> !searchTags.contains(tagCounter.getOtherTag(tag)))
+                .map(tagCounter -> Map.entry(tagCounter.getOtherTag(tag), tagCounter.getCount()))
+        )
+        .collect(Collectors.toMap(Entry::getKey, Entry::getValue, Integer::sum));
 
     // Sort recommended tags
-    List<Entry<Tag, Integer>> sortedRecommendedTags = new ArrayList<>(recommendedTags.entrySet());
-    sortedRecommendedTags.sort(
-        new Comparator<Entry<Tag, Integer>>() {
-          @Override
-          public int compare(Entry<Tag, Integer> a, Entry<Tag, Integer> b) {
-            return a.getValue() > b.getValue() ? -1 : a.getValue() == b.getValue() ? 0 : 1;
-          }
-        });
+    List<Entry<Tag, Integer>> sortedRecommendedTags = recommendedTags.entrySet().stream()
+        .sorted((a, b) -> b.getValue().compareTo(a.getValue()))
+        .toList();
 
-    List<Tag> returnedRecommendedTags = new ArrayList<>();
-    for (int i = 0; i < resultCount && i < sortedRecommendedTags.size(); i++) {
-      returnedRecommendedTags.add(sortedRecommendedTags.get(i).getKey());
-    }
-    return returnedRecommendedTags;
+    return sortedRecommendedTags
+        .stream().limit(resultCount)
+        .map(Entry::getKey)
+        .toList();
   }
 }
