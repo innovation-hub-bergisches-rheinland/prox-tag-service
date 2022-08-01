@@ -91,6 +91,7 @@ public class TagRecommendationTest {
 
     tagCollectionRepository.save(tagCollection1);
     tagCollectionRepository.save(tagCollection2);
+    tagCollectionRepository.save(tagCollection3);
 
     var tagRecommendation = tagRepository.tagRecommendations(List.of(fourth.getId()));
 
