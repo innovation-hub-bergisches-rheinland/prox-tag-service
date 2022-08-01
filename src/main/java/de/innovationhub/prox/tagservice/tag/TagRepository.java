@@ -36,5 +36,5 @@ public interface TagRepository extends PagingAndSortingRepository<Tag, UUID> {
           group by t.id
           order by count(t.id) desc
       """)
-  List<Tag> tagRecommendations(@RequestParam("tagIds") Collection<UUID> tagIds, @PageableDefault(value = 15) Pageable pageable);
+  List<Tag> tagRecommendations(@RequestParam("tagIds") Collection<UUID> tagIds);
 }

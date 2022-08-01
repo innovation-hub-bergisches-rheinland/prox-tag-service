@@ -31,7 +31,7 @@ public class TagRecommendationTest {
     var inputIds = tagInput
         .stream().map(Tag::getId)
         .toList();
-    var tagRecommendation = tagRepository.tagRecommendations(inputIds, Pageable.ofSize(5));
+    var tagRecommendation = tagRepository.tagRecommendations(inputIds);
 
     assertThat(tagRecommendation)
         .hasSizeGreaterThanOrEqualTo(1)
@@ -54,7 +54,7 @@ public class TagRecommendationTest {
     var inputIds = tagInput
         .stream().map(Tag::getId)
         .toList();
-    var tagRecommendation = tagRepository.tagRecommendations(inputIds, Pageable.ofSize(5));
+    var tagRecommendation = tagRepository.tagRecommendations(inputIds);
 
     assertThat(tagRecommendation)
         .hasSizeGreaterThanOrEqualTo(1)
@@ -92,7 +92,7 @@ public class TagRecommendationTest {
     tagCollectionRepository.save(tagCollection1);
     tagCollectionRepository.save(tagCollection2);
 
-    var tagRecommendation = tagRepository.tagRecommendations(List.of(fourth.getId()), Pageable.ofSize(5));
+    var tagRecommendation = tagRepository.tagRecommendations(List.of(fourth.getId()));
 
     assertThat(tagRecommendation)
         .containsExactly(third, second, first);
@@ -119,7 +119,7 @@ public class TagRecommendationTest {
     tagCollectionRepository.save(tagCollection1);
     tagCollectionRepository.save(tagCollection2);
 
-    var tagRecommendation = tagRepository.tagRecommendations(List.of(first.getId()), Pageable.ofSize(5));
+    var tagRecommendation = tagRepository.tagRecommendations(List.of(first.getId()));
 
     assertThat(tagRecommendation)
         .contains(second, third);
