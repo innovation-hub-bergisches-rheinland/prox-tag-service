@@ -38,7 +38,7 @@ public class TagRecommendationCalculatorTest {
     tagCounterRepository.save(new TagCounter(tag3, tag4, 3));
 
     List<Tag> result =
-        tagRecommendationCalculator.getRecommendedTags(new UUID[] {tag1.getId(), tag2.getId()});
+        tagRecommendationCalculator.getRecommendedTags(List.of(tag1.getId(), tag2.getId()));
     assertEquals(result.size(), 2);
     assertEquals(result.get(0), tag3);
     assertEquals(result.get(1), tag4);

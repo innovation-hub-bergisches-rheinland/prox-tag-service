@@ -27,15 +27,9 @@ public class TagRecommendationCalculator {
   @Value("${tagRecommendationCalculation.resultCount}")
   private int resultCount;
 
-  public List<Tag> getRecommendedTags(UUID[] tagIds) {
+  public List<Tag> getRecommendedTags(Collection<UUID> tagIds) {
     // Retrieve search tags
-    List<Tag> searchTags = new ArrayList<>();
-    for (UUID tagId : tagIds) {
-      Optional<Tag> optionalSearchTag = tagRepository.findById(tagId);
-      if (optionalSearchTag.isPresent()) {
-        searchTags.add(optionalSearchTag.get());
-      }
-    }
+    List<Tag> searchTags = tagRepository.findByIdIn(tagIds);
 
     if (searchTags.isEmpty()) {
       return new ArrayList<>();

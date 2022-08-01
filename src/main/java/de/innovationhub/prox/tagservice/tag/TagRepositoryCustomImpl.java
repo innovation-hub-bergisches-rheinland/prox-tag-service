@@ -2,6 +2,7 @@ package de.innovationhub.prox.tagservice.tag;
 
 
 import de.innovationhub.prox.tagservice.tag.recommendation.TagRecommendationCalculator;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ public class TagRepositoryCustomImpl implements TagRepositoryCustom {
   }
 
   @Override
-  public List<Tag> tagRecommendations(@RequestParam("tagIds") UUID[] tagIds) {
+  public List<Tag> tagRecommendations(@RequestParam("tagIds") Collection<UUID> tagIds) {
 
     List<Tag> recommendedTags = tagRecommendationCalculator.getRecommendedTags(tagIds);
 
