@@ -32,6 +32,7 @@
     <spotless-maven-plugin.version>2.17.4</spotless-maven-plugin.version>
     <spring-cloud.version>2020.0.4</spring-cloud.version>
     <testcontainers.version>1.15.3</testcontainers.version>
+    <protobuf.version>3.19.2</protobuf.version>
   </properties>
 
   <dependencyManagement>
@@ -99,6 +100,11 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.google.protobuf</groupId>
+      <artifactId>protobuf-java</artifactId>
+      <version>${protobuf.version}</version>
+    </dependency>
 
     <dependency>
       <groupId>com.h2database</groupId>
@@ -152,6 +158,31 @@
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>com.github.os72</groupId>
+        <artifactId>protoc-jar-maven-plugin</artifactId>
+        <version>3.11.4</version>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <protocVersion>${protobuf.version}</protocVersion>
+              <addSources>main</addSources>
+              <includeMavenTypes>direct</includeMavenTypes>
+              <includeStdTypes>true</includeStdTypes>
+              <includeDirectories>
+                <include>src/main/proto</include>
+              </includeDirectories>
+              <inputDirectories>
+                <include>src/main/proto</include>
+              </inputDirectories>
+            </configuration>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>com.google.cloud.tools</groupId>
