@@ -1,6 +1,7 @@
-package de.innovationhub.prox.tagservice.tag;
+package de.innovationhub.prox.tagservice.tagcollection;
 
 
+import de.innovationhub.prox.tagservice.tag.Tag;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.Query;

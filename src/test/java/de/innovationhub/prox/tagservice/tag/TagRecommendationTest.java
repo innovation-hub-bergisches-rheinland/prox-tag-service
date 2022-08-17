@@ -2,13 +2,14 @@ package de.innovationhub.prox.tagservice.tag;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import de.innovationhub.prox.tagservice.tagcollection.TagCollection;
+import de.innovationhub.prox.tagservice.tagcollection.TagCollectionRepository;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.data.domain.Pageable;
 
 @DataJpaTest
 public class TagRecommendationTest {

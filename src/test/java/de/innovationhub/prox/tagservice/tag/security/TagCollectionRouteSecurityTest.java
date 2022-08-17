@@ -3,8 +3,9 @@ package de.innovationhub.prox.tagservice.tag.security;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import de.innovationhub.prox.tagservice.tag.Tag;
-import de.innovationhub.prox.tagservice.tag.TagCollection;
-import de.innovationhub.prox.tagservice.tag.TagCollectionRepository;
+import de.innovationhub.prox.tagservice.tag.security.RouteSecurityTest;
+import de.innovationhub.prox.tagservice.tagcollection.TagCollection;
+import de.innovationhub.prox.tagservice.tagcollection.TagCollectionRepository;
 import de.innovationhub.prox.tagservice.tag.TagName;
 import de.innovationhub.prox.tagservice.tag.TagRepository;
 import de.innovationhub.prox.tagservice.utils.AuthenticationUtils;

@@ -1,6 +1,7 @@
 package de.innovationhub.prox.tagservice.tag;
 
 
+import de.innovationhub.prox.tagservice.tagcollection.TagCollectionRepository;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;

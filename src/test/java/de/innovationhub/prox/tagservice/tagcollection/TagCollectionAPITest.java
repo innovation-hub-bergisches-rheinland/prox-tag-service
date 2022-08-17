@@ -1,4 +1,4 @@
-package de.innovationhub.prox.tagservice.tag;
+package de.innovationhub.prox.tagservice.tagcollection;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,7 +13,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Arrays;
+import de.innovationhub.prox.tagservice.tag.Tag;
+import de.innovationhub.prox.tagservice.tag.TagName;
+import de.innovationhub.prox.tagservice.tag.TagRepository;
+import de.innovationhub.prox.tagservice.tagcollection.TagCollection;
+import de.innovationhub.prox.tagservice.tagcollection.TagCollectionRepository;
 import java.util.Collections;
 import java.util.Optional;
 import java.util.Set;
@@ -47,9 +51,11 @@ class TagCollectionAPITest {
   private static final String TAG_COLLECTIONS_ID_ROUTE = "/tagCollections/{id}";
   private static final String TAG_COLLECTIONS_ID_TAGS_ROUTE = "/tagCollections/{id}/tags";
 
-  @Autowired TagCollectionRepository tagCollectionRepository;
+  @Autowired
+  TagCollectionRepository tagCollectionRepository;
 
-  @Autowired TagRepository tagRepository;
+  @Autowired
+  TagRepository tagRepository;
 
   @Autowired MockMvc mockMvc;
 

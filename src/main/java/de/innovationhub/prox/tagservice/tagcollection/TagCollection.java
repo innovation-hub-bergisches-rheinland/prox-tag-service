@@ -1,6 +1,7 @@
-package de.innovationhub.prox.tagservice.tag;
+package de.innovationhub.prox.tagservice.tagcollection;
 
 
+import de.innovationhub.prox.tagservice.tag.Tag;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

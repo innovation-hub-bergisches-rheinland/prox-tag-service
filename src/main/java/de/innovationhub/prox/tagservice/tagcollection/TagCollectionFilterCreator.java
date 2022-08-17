@@ -1,4 +1,4 @@
-package de.innovationhub.prox.tagservice.tag;
+package de.innovationhub.prox.tagservice.tagcollection;
 
 
 import java.io.IOException;
@@ -7,7 +7,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
