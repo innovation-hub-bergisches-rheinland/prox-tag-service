@@ -6,7 +6,7 @@ option java_outer_classname = "TagCollectionProto";
 
 import "tag.proto";
 
-message TagCollection {
+message TagCollectionData {
   string id = 1;
-  repeated Tag tags = 5;
+  repeated TagData tags = 5;
 }

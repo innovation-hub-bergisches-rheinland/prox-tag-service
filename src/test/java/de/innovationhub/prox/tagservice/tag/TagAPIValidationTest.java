@@ -7,9 +7,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import de.innovationhub.prox.tagservice.tagcollection.TagCollectionEventHandler;
 import de.innovationhub.prox.tagservice.utils.AuthenticationUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -32,6 +34,12 @@ public class TagAPIValidationTest {
   @Autowired TagRepository tagRepository;
 
   @MockBean AuthenticationUtils authenticationUtils;
+
+  @MockBean
+  TagEventHandler tagEventHandler;
+
+  @MockBean
+  TagCollectionEventHandler tagCollectionEventHandler;
 
   Tag emptyTag = new Tag();
 
