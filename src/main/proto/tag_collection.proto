@@ -1,12 +1,10 @@
 syntax = "proto3";
 
 option java_multiple_files = true;
-option java_package = "de.innovationhub.prox.tagservice.tag.data";
-option java_outer_classname = "TagCollectionProto";
+option java_package = "de.innovationhub.prox.tagservice.tags.events.dto";
+option java_outer_classname = "TagEventsProto";
 
-import "tag.proto";
-
-message TagCollectionData {
+message TagsAddedDto {
   string id = 1;
-  repeated TagData tags = 5;
+  repeated string tags = 5;
 }

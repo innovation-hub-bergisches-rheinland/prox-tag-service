@@ -1,31 +1,33 @@
 package de.innovationhub.prox.tagservice.tag;
 
+import java.util.Objects;
+import javax.persistence.Embeddable;
+import lombok.AccessLevel;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
-import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import de.innovationhub.prox.tagservice.core.AbstractEntity;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import lombok.*;
-
-@Entity
-@Getter
-@ToString(callSuper = true)
+@Embeddable
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"tagName"})})
 @EqualsAndHashCode
-public class Tag extends AbstractEntity implements Comparable<Tag> {
+public class Tag {
+  private String tag;
 
-  @Setter @JsonUnwrapped @NotNull @Valid private TagName tagName;
+  public Tag(String tag) {
+    Objects.requireNonNull(tag);
+    tag = tag.trim().toLowerCase();
 
-  public Tag(TagName tagName) {
-    this.tagName = tagName;
+    if(tag.isBlank()) {
+      throw new IllegalArgumentException("Tag must not be blank");
+    }
+
+    this.tag = tag;
   }
 
-  @Override
-  public int compareTo(Tag o) {
-    return this.getTagName().compareTo(o.getTagName());
+  public String getTag() {
+    return tag;
+  }
+
+  protected void setTag(String tag) {
+    this.tag = tag;
   }
 }

@@ -27,10 +27,8 @@ public class SpringfoxConfig {
         .forCodeGeneration(true)
         .securityContexts(Collections.singletonList(securityContext()))
         .securitySchemes(Collections.singletonList(jwtScheme()))
-        .groupName("tag-service")
+        .groupName("tags-service")
         .select()
-        .paths(PathSelectors.ant("/tags/**").or(PathSelectors.ant("/tagCollections/**")))
-        .apis(customRequestHandlers())
         .build();
   }
 
@@ -47,34 +45,5 @@ public class SpringfoxConfig {
 
   private SecurityScheme jwtScheme() {
     return HttpAuthenticationScheme.JWT_BEARER_BUILDER.name("JWT").build();
-  }
-
-  private Predicate<RequestHandler> customRequestHandlers() {
-    return new Predicate<RequestHandler>() {
-      @Override
-      public boolean test(RequestHandler input) {
-        if (input != null
-            && input.getName() != null
-            && input.getName().equals("findAllTagCollection")) {
-          Set<RequestMethod> methodSet = input.supportedMethods();
-          return methodSet.contains(RequestMethod.GET)
-              || methodSet.contains(RequestMethod.OPTIONS)
-              || methodSet.contains(RequestMethod.HEAD);
-        } else if (input != null
-            && input.getName() != null
-            && input.getName().equals("tagCollectionTags")) {
-          Set<RequestMethod> methodSet = input.supportedMethods();
-          return methodSet.contains(RequestMethod.GET)
-              || methodSet.contains(RequestMethod.PUT)
-              || methodSet.contains(
-                  RequestMethod.POST); // NOTE PATCH is still displayed even if not supported
-        } else if (input != null && input.getName() != null) {
-          return !input.getName().equals("saveTagCollection")
-              && !input.getName().equals("tagCollectionTags")
-              && !input.getName().equals("deleteTagCollection");
-        }
-        return true;
-      }
-    };
   }
 }

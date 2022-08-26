@@ -1,45 +1,55 @@
 package de.innovationhub.prox.tagservice.tag;
 
-
-import de.innovationhub.prox.tagservice.tagcollection.TagCollectionRepository;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.rest.webmvc.RepositoryRestController;
-import org.springframework.hateoas.server.ExposesResourceFor;
+import de.innovationhub.prox.tagservice.tag.dto.ReadTagPopularityDto;
+import de.innovationhub.prox.tagservice.tag.dto.ReadTagRecommendationDto;
+import de.innovationhub.prox.tagservice.tag.dto.ReadTagsDto;
+import de.innovationhub.prox.tagservice.tag.dto.UpdateTagsDto;
+import java.util.Set;
+import java.util.UUID;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
-@RepositoryRestController
-@ExposesResourceFor(Tag.class)
+@RestController
 public class TagController {
+  private final TagCollectionService tagCollectionService;
 
-  private final TagCollectionRepository tagCollectionRepository;
-
-  @Autowired
-  public TagController(TagCollectionRepository tagCollectionRepository) {
-    this.tagCollectionRepository = tagCollectionRepository;
+  public TagController(TagCollectionService tagCollectionService) {
+    this.tagCollectionService = tagCollectionService;
   }
 
-  @GetMapping("tags/search/popularTags")
-  public @ResponseBody ResponseEntity<List<TagCount>> popularTags(
-      @RequestParam(required = false, defaultValue = "10", name = "limit") Integer limit) {
-    var popularTags =
-        this.tagCollectionRepository.findAllUsedTags().stream()
-            .flatMap(Collection::stream)
-            .collect(Collectors.groupingBy(tag -> tag, Collectors.counting()))
-            .entrySet()
-            .stream()
-            .sorted(Entry.comparingByValue(Comparator.reverseOrder()))
-            .limit(limit)
-            .map(entry -> new TagCount(entry.getKey(), entry.getValue()))
-            .toList();
+  @PutMapping(value = "/tags/{id}", consumes = "application/json", produces = "application/json")
+  public ResponseEntity<ReadTagsDto> addTags(@PathVariable UUID id, @RequestBody UpdateTagsDto updateTagsDto) {
+    tagCollectionService.addTags(id, updateTagsDto);
 
-    return ResponseEntity.ok(popularTags);
+    var newTags = tagCollectionService.getTags(id);
+
+    return ResponseEntity.ok(newTags);
+  }
+
+  @GetMapping(value = "/tags/{id}", produces = "application/json")
+  public ResponseEntity<ReadTagsDto> getTags(@PathVariable UUID id) {
+    return ResponseEntity.ok(tagCollectionService.getTags(id));
+  }
+
+  @GetMapping(value = "/tags/popular", produces = "application/json")
+  public ResponseEntity<ReadTagPopularityDto> getPopularTags(@RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
+    return ResponseEntity.ok(tagCollectionService.findPopularTags(size));
+  }
+
+  @GetMapping(value = "/tags/recommendations", produces = "application/json")
+  public ResponseEntity<ReadTagRecommendationDto> getPopularTags(@RequestParam("tags") Set<String> tags) {
+    if(tags.isEmpty()) {
+      throw new ResponseStatusException(
+        org.springframework.http.HttpStatus.BAD_REQUEST,
+        "Tags are required"
+      );
+    }
+    return ResponseEntity.ok(tagCollectionService.findRecommendedTags(tags));
   }
 }

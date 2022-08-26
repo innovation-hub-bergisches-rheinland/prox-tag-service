@@ -2,19 +2,19 @@ package de.innovationhub.prox.tagservice.tag;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import de.innovationhub.prox.tagservice.tagcollection.TagCollection;
-import de.innovationhub.prox.tagservice.tagcollection.TagCollectionRepository;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
-public class TagRecommendationTest {
-  @Autowired
-  TagRepository tagRepository;
+@ActiveProfiles("h2")
+class TagRecommendationTest {
 
   @Autowired
   TagCollectionRepository tagCollectionRepository;
@@ -22,17 +22,16 @@ public class TagRecommendationTest {
   @Test
   void shouldExcludeInputTags() {
     var sampleTags = sampleTags(5);
-    tagRepository.saveAll(sampleTags);
 
     var tagCollection = new TagCollection(UUID.randomUUID());
-    tagCollection.addTags(sampleTags);
+    tagCollection.setTags(sampleTags);
     tagCollectionRepository.save(tagCollection);
 
     var tagInput = sampleTags.subList(0, 2);
-    var inputIds = tagInput
-        .stream().map(Tag::getId)
+    var inputTags = tagInput
+        .stream().map(Tag::getTag)
         .toList();
-    var tagRecommendation = tagRepository.tagRecommendations(inputIds);
+    var tagRecommendation = tagCollectionRepository.tagRecommendations(inputTags);
 
     assertThat(tagRecommendation)
         .hasSizeGreaterThanOrEqualTo(1)
@@ -42,20 +41,19 @@ public class TagRecommendationTest {
   @Test
   void shouldNotContainDuplicateTags() {
     var sampleTags = sampleTags(5);
-    tagRepository.saveAll(sampleTags);
 
     var tagCollection1 = new TagCollection(UUID.randomUUID());
     var tagCollection2 = new TagCollection(UUID.randomUUID());
-    tagCollection1.addTags(sampleTags);
-    tagCollection2.addTags(sampleTags);
+    tagCollection1.setTags(sampleTags);
+    tagCollection2.setTags(sampleTags);
     tagCollectionRepository.save(tagCollection1);
     tagCollectionRepository.save(tagCollection2);
 
     var tagInput = sampleTags.subList(0, 2);
-    var inputIds = tagInput
-        .stream().map(Tag::getId)
+    var inputTags = tagInput
+        .stream().map(Tag::getTag)
         .toList();
-    var tagRecommendation = tagRepository.tagRecommendations(inputIds);
+    var tagRecommendation = tagCollectionRepository.tagRecommendations(inputTags);
 
     assertThat(tagRecommendation)
         .hasSizeGreaterThanOrEqualTo(1)
@@ -65,7 +63,6 @@ public class TagRecommendationTest {
   @Test
   void shouldSortByFrequency() {
     var sampleTags = sampleTags(4);
-    tagRepository.saveAll(sampleTags);
 
     var tagCollection1 = new TagCollection(UUID.randomUUID());
     var tagCollection2 = new TagCollection(UUID.randomUUID());
@@ -76,25 +73,16 @@ public class TagRecommendationTest {
     var third =  sampleTags.get(2);
     var fourth =  sampleTags.get(3);
 
-    // This will be the search tag
-    tagCollection1.addTag(fourth);
-    tagCollection2.addTag(fourth);
-    tagCollection3.addTag(fourth);
-
-    tagCollection1.addTag(third);
-    tagCollection2.addTag(third);
-    tagCollection3.addTag(third);
-
-    tagCollection2.addTag(second);
-    tagCollection3.addTag(second);
-
-    tagCollection1.addTag(first);
+    // This will be the search tags
+    tagCollection1.setTags(Set.of(first, third, fourth));
+    tagCollection2.setTags(Set.of(second, third, fourth));
+    tagCollection3.setTags(Set.of(second, third, fourth));
 
     tagCollectionRepository.save(tagCollection1);
     tagCollectionRepository.save(tagCollection2);
     tagCollectionRepository.save(tagCollection3);
 
-    var tagRecommendation = tagRepository.tagRecommendations(List.of(fourth.getId()));
+    var tagRecommendation = tagCollectionRepository.tagRecommendations(List.of(fourth.getTag()));
 
     assertThat(tagRecommendation)
         .containsExactly(third, second, first);
@@ -103,7 +91,6 @@ public class TagRecommendationTest {
   @Test
   void shouldRecommendTagsInOtherCollection() {
     var sampleTags = sampleTags(3);
-    tagRepository.saveAll(sampleTags);
 
     var tagCollection1 = new TagCollection(UUID.randomUUID());
     var tagCollection2 = new TagCollection(UUID.randomUUID());
@@ -112,16 +99,13 @@ public class TagRecommendationTest {
     var second =  sampleTags.get(1);
     var third =  sampleTags.get(2);
 
-    tagCollection1.addTag(first);
-
-    tagCollection2.addTag(first);
-    tagCollection1.addTag(second);
-    tagCollection2.addTag(third);
+    tagCollection1.setTags(Set.of(first, second));
+    tagCollection2.setTags(Set.of(first, third));
 
     tagCollectionRepository.save(tagCollection1);
     tagCollectionRepository.save(tagCollection2);
 
-    var tagRecommendation = tagRepository.tagRecommendations(List.of(first.getId()));
+    var tagRecommendation = tagCollectionRepository.tagRecommendations(List.of(first.getTag()));
 
     assertThat(tagRecommendation)
         .contains(second, third);
@@ -129,7 +113,7 @@ public class TagRecommendationTest {
 
   private List<Tag> sampleTags(int count) {
     return IntStream.range(0, count)
-        .mapToObj(i -> new Tag(new TagName("Tag_" + i)))
+        .mapToObj(i -> new Tag("Tag_" + i))
         .toList();
   }
 }

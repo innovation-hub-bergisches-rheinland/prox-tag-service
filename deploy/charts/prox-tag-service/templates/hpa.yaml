@@ -2,14 +2,14 @@
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "prox-tag-service.fullname" . }}
+  name: {{ include "prox-tags-service.fullname" . }}
   labels:
-    {{- include "prox-tag-service.labels" . | nindent 4 }}
+    {{- include "prox-tags-service.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "prox-tag-service.fullname" . }}
+    name: {{ include "prox-tags-service.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
