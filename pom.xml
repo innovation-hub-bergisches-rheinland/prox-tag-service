@@ -249,6 +249,13 @@
                 <groupId>com.google.cloud.tools</groupId>
                 <artifactId>jib-maven-plugin</artifactId>
                 <version>3.1.4</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.google.cloud.tools</groupId>
+                        <artifactId>jib-spring-boot-extension-maven</artifactId>
+                        <version>0.1.0</version>
+                    </dependency>
+                </dependencies>
                 <configuration>
                     <to>
                         <image>${docker.image.prefix}/${project.artifactId}</image>
@@ -260,6 +267,11 @@
                     <from>
                         <image>eclipse-temurin:17-jdk-alpine</image>
                     </from>
+                    <pluginExtensions>
+                        <pluginExtension>
+                            <implementation>com.google.cloud.tools.jib.maven.extension.springboot.JibSpringBootExtension</implementation>
+                        </pluginExtension>
+                    </pluginExtensions>
                 </configuration>
                 <executions>
                     <execution>
