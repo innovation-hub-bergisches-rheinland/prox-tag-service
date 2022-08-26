@@ -158,6 +158,9 @@ jobs:
           distribution: 'temurin'
           cache: 'maven'
 
+      - name: Update Maven Settings
+        run: mkdir -p ~/.m2 ; cp ${{ env.MAVEN_SETTINGS }} ~/.m2
+
       - name: Login to Quay
         uses: docker/login-action@v1
         with:
