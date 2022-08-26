@@ -42,6 +42,12 @@ public class TagCollectionServiceImpl implements TagCollectionService {
   }
 
   @Override
+  public ReadTagsDto searchTags(String query) {
+    return new ReadTagsDto(tagCollectionRepository.search(query).stream().map(Tag::getTag).collect(
+      Collectors.toSet()));
+  }
+
+  @Override
   public ReadTagPopularityDto findPopularTags(Integer size) {
     var popularityMap = tagCollectionRepository.findPopularTags(size);
     return new ReadTagPopularityDto(popularityMap);

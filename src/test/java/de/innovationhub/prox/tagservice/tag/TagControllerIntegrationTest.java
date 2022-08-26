@@ -104,6 +104,25 @@ class TagControllerIntegrationTest {
   }
 
   @Test
+  void shouldSearchTags() {
+    var tagCollection1 = new TagCollection(UUID.randomUUID());
+    tagCollection1.setTags(sampleTags("abcdefg"));
+
+    entityManager.persist(tagCollection1);
+
+    RestAssuredMockMvc
+      .given()
+      .queryParam("q", "bcd")
+      .accept("application/json")
+      .when()
+      .get("/tags/search")
+      .then()
+      .statusCode(200)
+      .body("tags", hasSize(1))
+      .body("tags", hasItems("abcdefg"));
+  }
+
+  @Test
   void shouldReturnRecommendationsTags() {
     var tagCollection1 = new TagCollection(UUID.randomUUID());
     tagCollection1.setTags(sampleTags("a", "b", "c"));

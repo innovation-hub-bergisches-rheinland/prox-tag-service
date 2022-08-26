@@ -24,4 +24,11 @@ public interface TagCollectionRepository extends PagingAndSortingRepository<TagC
           order by count(t.tag) desc
       """)
   List<Tag> tagRecommendations(Collection<String> tagNames);
+
+  @Query("""
+          select t from TagCollection tc
+          join tc.tags t
+          where t.tag like concat('%', lower(?1), '%')
+      """)
+  List<Tag> search(String query);
 }

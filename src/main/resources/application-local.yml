@@ -1,12 +1,7 @@
 spring:
   datasource:
-    password: tag-service
-    url: jdbc:h2:mem:testdb
-    username: tag-service
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: create-drop
-  flyway:
-    enabled: false
+    password: tags-service
+    url: jdbc:postgresql://localhost:5433/tags-db
+    username: tags-service
+
 

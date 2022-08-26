@@ -11,6 +11,8 @@ public interface TagCollectionService {
   void addTags(UUID id, UpdateTagsDto updateTagsDto);
   ReadTagsDto getTags(UUID id);
 
+  ReadTagsDto searchTags(String query);
+
   ReadTagPopularityDto findPopularTags(Integer size);
 
   ReadTagRecommendationDto findRecommendedTags(Collection<String> tags);
