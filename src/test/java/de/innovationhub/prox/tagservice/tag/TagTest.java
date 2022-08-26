@@ -6,9 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 
+import de.innovationhub.prox.tagservice.tagcollection.TagCollectionEventHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.dao.DataIntegrityViolationException;
 
@@ -17,6 +19,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 class TagTest {
 
   @Autowired TagRepository tagRepository;
+
+  @MockBean
+  TagEventHandler tagEventHandler;
 
   @Test
   void tagNameConstraints() {

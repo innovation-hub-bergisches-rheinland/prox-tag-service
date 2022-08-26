@@ -26,6 +26,13 @@
         <url>https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service</url>
     </scm>
 
+    <repositories>
+        <repository>
+            <id>confluent</id>
+            <url>https://packages.confluent.io/maven/</url>
+        </repository>
+    </repositories>
+
     <properties>
         <docker.image.prefix>quay.io/innovation-hub-bergisches-rheinland</docker.image.prefix>
         <frontend-maven-plugin.nodeVersion>v16.13.0</frontend-maven-plugin.nodeVersion>
@@ -108,6 +115,15 @@
             <groupId>com.google.protobuf</groupId>
             <artifactId>protobuf-java</artifactId>
             <version>${protobuf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.confluent</groupId>
+            <artifactId>kafka-protobuf-serializer</artifactId>
+            <version>7.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
         </dependency>
 
         <dependency>

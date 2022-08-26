@@ -14,6 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import de.innovationhub.prox.tagservice.tag.Tag;
+import de.innovationhub.prox.tagservice.tag.TagEventHandler;
 import de.innovationhub.prox.tagservice.tag.TagName;
 import de.innovationhub.prox.tagservice.tag.TagRepository;
 import de.innovationhub.prox.tagservice.tagcollection.TagCollection;
@@ -24,9 +25,11 @@ import java.util.Set;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.hateoas.server.EntityLinks;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -60,6 +63,12 @@ class TagCollectionAPITest {
   @Autowired MockMvc mockMvc;
 
   @Autowired EntityLinks entityLinks;
+
+  @MockBean
+  TagEventHandler tagEventHandler;
+
+  @MockBean
+  TagCollectionEventHandler tagCollectionEventHandler;
 
   // GET /tagCollections
   @Test
