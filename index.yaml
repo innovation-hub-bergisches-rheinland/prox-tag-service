@@ -3,9 +3,9 @@ entries:
   prox-tag-service:
   - apiVersion: v2
     appVersion: 2.0.0
-    created: "2022-08-26T22:22:39.751685698Z"
+    created: "2022-08-26T22:41:41.414085513Z"
     description: A Helm chart for Kubernetes
-    digest: 24dd0ed1c6eed75c250712bf62735c064b6e3dffd7546cc5ff0991a145791081
+    digest: 199ca21485f23555a83d6600227701ae9cb4af87d4586e04970dfb5f805e0e27
     name: prox-tag-service
     type: application
     urls:
@@ -91,4 +91,4 @@ entries:
     urls:
     - https://innovation-hub-bergisches-rheinland.github.io/prox-tag-service/prox-tag-service-1.0.0.tgz
     version: 1.0.0
-generated: "2022-08-26T22:22:39.750831092Z"
+generated: "2022-08-26T22:41:41.4133814Z"
