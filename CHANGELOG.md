@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v1.0.7...v2.0.0) (2022-08-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* rewrite APIs
+
+### Features
+
+* add tag search ([7facda8](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/commit/7facda874c631f55976c94f1142fc4731dd1a52e))
+
+
+### Bug Fixes
+
+* configure cors ([5d525d3](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/commit/5d525d30a691674d06bb936734ddbd80bb9d530e))
+* helm chart (tags -> tag) ([5d9ee97](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/commit/5d9ee9787bf58d57f888076c990d4833060fd5f4))
+* use HTTPS for confluent repository URL ([ed02186](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/commit/ed021862ec0e67a1ad30ce07145df3e2f440885d))
+* use separate outerclassname ([2addc1c](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/commit/2addc1cafc13d25cf2bfbc98ec2530c94f64e4b4))
+
+
+* rewrite APIs ([dd55a30](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/commit/dd55a30619e2b4c91887a6bc07c90b988554e6cc))
+
 ### [1.0.7](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v1.0.6...v1.0.7) (2022-04-04)
 
 ### [1.0.6](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v1.0.5...v1.0.6) (2022-03-30)
