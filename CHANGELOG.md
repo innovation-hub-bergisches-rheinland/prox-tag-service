@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v2.0.0...v2.0.1) (2022-08-26)
+
+
+### Bug Fixes
+
+* configure jib to exclude spring-boot-devtools ([621680e](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/commit/621680e213a397742cf53cf310f8cb3c05fe539c))
+
 ## [2.0.0](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v1.0.7...v2.0.0) (2022-08-26)
 
 
