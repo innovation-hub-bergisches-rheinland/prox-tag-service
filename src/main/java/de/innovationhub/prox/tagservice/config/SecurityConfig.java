@@ -1,6 +1,7 @@
 package de.innovationhub.prox.tagservice.config;
 
 
+import java.util.List;
 import org.keycloak.adapters.springsecurity.KeycloakConfiguration;
 import org.keycloak.adapters.springsecurity.authentication.KeycloakAuthenticationProvider;
 import org.keycloak.adapters.springsecurity.config.KeycloakWebSecurityConfigurerAdapter;
@@ -12,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
 import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
+import org.springframework.web.cors.CorsConfiguration;
 
 @KeycloakConfiguration
 class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
@@ -36,8 +38,14 @@ class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    super.configure(http);
+    CorsConfiguration corsConfiguration = new CorsConfiguration();
+    corsConfiguration.setAllowedHeaders(List.of("Authorization", "Cache-Control", "Content-Type"));
+    corsConfiguration.setAllowedOrigins(List.of("*"));
+    corsConfiguration.setAllowedMethods(List.of("GET", "PUT", "OPTIONS"));
+    corsConfiguration.setExposedHeaders(List.of("Authorization"));
+
     http.cors()
+        .configurationSource(request -> corsConfiguration)
         .and()
         .csrf()
         .disable()
