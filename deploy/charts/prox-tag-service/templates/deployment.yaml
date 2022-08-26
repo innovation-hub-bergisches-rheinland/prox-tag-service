@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "prox-tags-service.fullname" . }}
+  name: {{ include "prox-tag-service.fullname" . }}
   labels:
-    {{- include "prox-tags-service.labels" . | nindent 4 }}
+    {{- include "prox-tag-service.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "prox-tags-service.selectorLabels" . | nindent 6 }}
+      {{- include "prox-tag-service.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -18,20 +18,20 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "prox-tags-service.selectorLabels" . | nindent 8 }}
+        {{- include "prox-tag-service.selectorLabels" . | nindent 8 }}
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "prox-tags-service.serviceAccountName" . }}
+      serviceAccountName: {{ include "prox-tag-service.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tags | default .Chart.AppVersion }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
@@ -41,15 +41,15 @@ spec:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
             - name: SPRING_CONFIG_ADDITIONAL-LOCATION
-              value: "file:/etc/prox-tags-service/"
+              value: "file:/etc/prox-tag-service/"
             - name: SPRING_DATASOURCE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.config.existingSecret | default (include "prox-tags-service.fullname" .) }}
+                  name: {{ .Values.config.existingSecret | default (include "prox-tag-service.fullname" .) }}
                   key: superUserPassword
           volumeMounts:
             - name: application-properties
-              mountPath: "/etc/prox-tags-service"
+              mountPath: "/etc/prox-tag-service"
               readOnly: true
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -66,4 +66,4 @@ spec:
       volumes:
         - name: application-properties
           configMap:
-            name: {{ .Values.config.existingConfigMap | default (include "prox-tags-service.fullname" .) }}
+            name: {{ .Values.config.existingConfigMap | default (include "prox-tag-service.fullname" .) }}

@@ -1,13 +1,13 @@
-# Default values for prox-tags-service.
+# Default values for prox-tag-service.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
 
 image:
-  repository: quay.io/innovation-hub-bergisches-rheinland/prox-tags-service
+  repository: quay.io/innovation-hub-bergisches-rheinland/prox-tag-service
   pullPolicy: IfNotPresent
-  # Overrides the image tags whose default is the chart appVersion.
+  # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
 imagePullSecrets: []
