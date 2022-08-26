@@ -38,7 +38,6 @@
         <frontend-maven-plugin.nodeVersion>v16.13.0</frontend-maven-plugin.nodeVersion>
         <frontend-maven-plugin.version>1.12.0</frontend-maven-plugin.version>
         <java.version>17</java.version>
-        <keycloak.version>19.0.1</keycloak.version>
         <maven-toolchains-plugin.version>3.0.0</maven-toolchains-plugin.version>
         <spotless-maven-plugin.version>2.17.4</spotless-maven-plugin.version>
         <spring-cloud.version>2020.0.4</spring-cloud.version>
@@ -50,13 +49,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.keycloak.bom</groupId>
-                <artifactId>keycloak-adapter-bom</artifactId>
-                <version>${keycloak.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -88,10 +80,6 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.keycloak</groupId>
-            <artifactId>keycloak-spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
@@ -111,6 +99,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
