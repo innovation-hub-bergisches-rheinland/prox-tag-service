@@ -1,5 +1,6 @@
 package de.innovationhub.prox.tagservice.tag;
 
+
 import java.util.Objects;
 import javax.persistence.Embeddable;
 import lombok.AccessLevel;
@@ -16,7 +17,7 @@ public class Tag {
     Objects.requireNonNull(tag);
     tag = tag.trim().toLowerCase();
 
-    if(tag.isBlank()) {
+    if (tag.isBlank()) {
       throw new IllegalArgumentException("Tag must not be blank");
     }
 

@@ -1,5 +1,6 @@
 package de.innovationhub.prox.tagservice.tag;
 
+
 import com.google.protobuf.Message;
 import de.innovationhub.prox.tagservice.tag.events.TagsAdded;
 import de.innovationhub.prox.tagservice.tags.events.dto.TagsAddedDto;
@@ -24,14 +25,18 @@ public class TagEventListener {
     this.kafkaTemplate = kafkaTemplate;
   }
 
-  @TransactionalEventListener(phase = org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT)
+  @TransactionalEventListener(
+      phase = org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT)
   public void onTagsAdded(TagsAdded event) {
-    var eventDto = TagsAddedDto.newBuilder()
-      .addAllTags(event.tags().stream().map(Tag::getTag).collect(Collectors.toSet()))
-      .setId(event.referencedEntity().toString())
-      .build();
+    var eventDto =
+        TagsAddedDto.newBuilder()
+            .addAllTags(event.tags().stream().map(Tag::getTag).collect(Collectors.toSet()))
+            .setId(event.referencedEntity().toString())
+            .build();
 
-    var record = new ProducerRecord<String, Message>(ADDED_TOPIC, event.referencedEntity().toString(), eventDto);
+    var record =
+        new ProducerRecord<String, Message>(
+            ADDED_TOPIC, event.referencedEntity().toString(), eventDto);
     var future = kafkaTemplate.send(record);
 
     try {

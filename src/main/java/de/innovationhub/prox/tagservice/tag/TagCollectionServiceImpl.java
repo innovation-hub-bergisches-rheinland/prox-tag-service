@@ -1,5 +1,6 @@
 package de.innovationhub.prox.tagservice.tag;
 
+
 import de.innovationhub.prox.tagservice.tag.dto.ReadTagPopularityDto;
 import de.innovationhub.prox.tagservice.tag.dto.ReadTagRecommendationDto;
 import de.innovationhub.prox.tagservice.tag.dto.ReadTagsDto;
@@ -23,13 +24,11 @@ public class TagCollectionServiceImpl implements TagCollectionService {
   @Transactional(TxType.REQUIRED)
   public void addTags(UUID id, UpdateTagsDto updateTagsDto) {
     // TODO: We need to create the collection while we don't have asynchronous messaging
-    // TagCollection tagCollection = tagCollectionRepository.findById(id).orElseThrow(() -> new TagCollectionNotFoundException(id));
+    // TagCollection tagCollection = tagCollectionRepository.findById(id).orElseThrow(() -> new
+    // TagCollectionNotFoundException(id));
     var tagCollection = tagCollectionRepository.findById(id).orElse(new TagCollection(id));
 
-    var tags = updateTagsDto.tags()
-      .stream()
-      .map(Tag::new)
-      .collect(Collectors.toSet());
+    var tags = updateTagsDto.tags().stream().map(Tag::new).collect(Collectors.toSet());
 
     tagCollection.setTags(tags);
     tagCollectionRepository.save(tagCollection);
@@ -37,14 +36,20 @@ public class TagCollectionServiceImpl implements TagCollectionService {
 
   @Override
   public ReadTagsDto getTags(UUID id) {
-    TagCollection tagCollection = tagCollectionRepository.findById(id).orElseThrow(() -> new TagCollectionNotFoundException(id));
-    return new ReadTagsDto(tagCollection.getTags().stream().map(Tag::getTag).collect(Collectors.toSet()));
+    TagCollection tagCollection =
+        tagCollectionRepository
+            .findById(id)
+            .orElseThrow(() -> new TagCollectionNotFoundException(id));
+    return new ReadTagsDto(
+        tagCollection.getTags().stream().map(Tag::getTag).collect(Collectors.toSet()));
   }
 
   @Override
   public ReadTagsDto searchTags(String query) {
-    return new ReadTagsDto(tagCollectionRepository.search(query).stream().map(Tag::getTag).collect(
-      Collectors.toSet()));
+    return new ReadTagsDto(
+        tagCollectionRepository.search(query).stream()
+            .map(Tag::getTag)
+            .collect(Collectors.toSet()));
   }
 
   @Override
@@ -56,6 +61,7 @@ public class TagCollectionServiceImpl implements TagCollectionService {
   @Override
   public ReadTagRecommendationDto findRecommendedTags(Collection<String> tags) {
     var result = tagCollectionRepository.tagRecommendations(tags);
-    return new ReadTagRecommendationDto(result.stream().map(Tag::getTag).collect(Collectors.toSet()));
+    return new ReadTagRecommendationDto(
+        result.stream().map(Tag::getTag).collect(Collectors.toSet()));
   }
 }

@@ -12,13 +12,11 @@ import java.util.Map;
 import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
-import javax.transaction.Transactional.TxType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
@@ -28,11 +26,9 @@ import org.springframework.test.web.servlet.MockMvc;
 @ActiveProfiles("h2")
 @Transactional
 class TagControllerIntegrationTest {
-  @Autowired
-  MockMvc mockMvc;
+  @Autowired MockMvc mockMvc;
 
-  @Autowired
-  EntityManager entityManager;
+  @Autowired EntityManager entityManager;
 
   @BeforeEach
   void setup() {
@@ -43,13 +39,12 @@ class TagControllerIntegrationTest {
   void shouldReturn404() {
     var id = UUID.randomUUID();
 
-    RestAssuredMockMvc
-      .given()
-      .accept("application/json")
-      .when()
-      .get("/tags/{id}", id)
-      .then()
-      .statusCode(404);
+    RestAssuredMockMvc.given()
+        .accept("application/json")
+        .when()
+        .get("/tags/{id}", id)
+        .then()
+        .statusCode(404);
   }
 
   @Test
@@ -61,15 +56,14 @@ class TagControllerIntegrationTest {
 
     entityManager.persist(tagCollection);
 
-    RestAssuredMockMvc
-      .given()
-      .accept("application/json")
-      .when()
-      .get("/tags/{id}", id)
-      .then()
-      .statusCode(200)
-      .body("tags", hasSize(3))
-      .body("tags", hasItems("a", "b", "c"));
+    RestAssuredMockMvc.given()
+        .accept("application/json")
+        .when()
+        .get("/tags/{id}", id)
+        .then()
+        .statusCode(200)
+        .body("tags", hasSize(3))
+        .body("tags", hasItems("a", "b", "c"));
   }
 
   @Test
@@ -82,25 +76,19 @@ class TagControllerIntegrationTest {
     entityManager.persist(tagCollection1);
     entityManager.persist(tagCollection2);
 
-    Map<String, Integer> result = RestAssuredMockMvc
-      .given()
-      .queryParam("size", 3)
-      .accept("application/json")
-      .when()
-      .get("/tags/popular")
-      .then()
-      .statusCode(200)
-      .extract()
-      .jsonPath()
-      .getMap("popularity");
+    Map<String, Integer> result =
+        RestAssuredMockMvc.given()
+            .queryParam("size", 3)
+            .accept("application/json")
+            .when()
+            .get("/tags/popular")
+            .then()
+            .statusCode(200)
+            .extract()
+            .jsonPath()
+            .getMap("popularity");
 
-    assertThat(result)
-      .hasSize(3)
-      .containsOnly(
-        entry("a", 2),
-        entry("b", 2),
-        entry("c", 1)
-      );
+    assertThat(result).hasSize(3).containsOnly(entry("a", 2), entry("b", 2), entry("c", 1));
   }
 
   @Test
@@ -110,16 +98,15 @@ class TagControllerIntegrationTest {
 
     entityManager.persist(tagCollection1);
 
-    RestAssuredMockMvc
-      .given()
-      .queryParam("q", "bcd")
-      .accept("application/json")
-      .when()
-      .get("/tags/search")
-      .then()
-      .statusCode(200)
-      .body("tags", hasSize(1))
-      .body("tags", hasItems("abcdefg"));
+    RestAssuredMockMvc.given()
+        .queryParam("q", "bcd")
+        .accept("application/json")
+        .when()
+        .get("/tags/search")
+        .then()
+        .statusCode(200)
+        .body("tags", hasSize(1))
+        .body("tags", hasItems("abcdefg"));
   }
 
   @Test
@@ -132,33 +119,31 @@ class TagControllerIntegrationTest {
     entityManager.persist(tagCollection1);
     entityManager.persist(tagCollection2);
 
-    RestAssuredMockMvc
-      .given()
-      .queryParam("tags", "a", "b")
-      .accept("application/json")
-      .when()
-      .get("/tags/recommendations")
-      .then()
-      .statusCode(200)
-      .body("recommendations", hasSize(2))
-      .body("recommendations", hasItems("c", "d"));
+    RestAssuredMockMvc.given()
+        .queryParam("tags", "a", "b")
+        .accept("application/json")
+        .when()
+        .get("/tags/recommendations")
+        .then()
+        .statusCode(200)
+        .body("recommendations", hasSize(2))
+        .body("recommendations", hasItems("c", "d"));
   }
 
   @Test
   void shouldReturnUnauthorized() {
-    RestAssuredMockMvc
-      .given()
-      .body("""
+    RestAssuredMockMvc.given()
+        .body("""
         {
           "tags": ["a", "b", "c"]
         }
       """)
-      .accept("application/json")
-      .contentType("application/json")
-      .when()
-      .put("/tags/{id}", UUID.randomUUID())
-      .then()
-      .statusCode(401);
+        .accept("application/json")
+        .contentType("application/json")
+        .when()
+        .put("/tags/{id}", UUID.randomUUID())
+        .then()
+        .statusCode(401);
   }
 
   @Test
@@ -168,27 +153,26 @@ class TagControllerIntegrationTest {
     var tagCollection = new TagCollection(id);
     entityManager.persist(tagCollection);
 
-    RestAssuredMockMvc
-      .given()
-      .body("""
+    RestAssuredMockMvc.given()
+        .body("""
         {
           "tags": ["a", "b", "c"]
         }
       """)
-      .accept("application/json")
-      .contentType("application/json")
-      .when()
-      .put("/tags/{id}", id)
-      .then()
-      .statusCode(200)
-      .body("tags", hasSize(3))
-      .body("tags", hasItems("a", "b", "c"));
+        .accept("application/json")
+        .contentType("application/json")
+        .when()
+        .put("/tags/{id}", id)
+        .then()
+        .statusCode(200)
+        .body("tags", hasSize(3))
+        .body("tags", hasItems("a", "b", "c"));
 
     var found = entityManager.find(TagCollection.class, id);
     assertThat(found.getTags())
-      .hasSize(3)
-      .extracting(Tag::getTag)
-      .containsExactlyInAnyOrder("a", "b", "c");
+        .hasSize(3)
+        .extracting(Tag::getTag)
+        .containsExactlyInAnyOrder("a", "b", "c");
   }
 
   // TODO: Only needed while we have no real asynchronous processing
@@ -196,29 +180,26 @@ class TagControllerIntegrationTest {
   @WithMockUser(roles = "professor")
   void shouldCreateTagCollectionOnPutIfNotExistent() {
     var id = UUID.randomUUID();
-    RestAssuredMockMvc
-      .given()
-      .body("""
+    RestAssuredMockMvc.given()
+        .body("""
         {
           "tags": ["a", "b", "c"]
         }
       """)
-      .accept("application/json")
-      .contentType("application/json")
-      .when()
-      .put("/tags/{id}", id)
-      .then()
-      .statusCode(200)
-      .body("tags", hasSize(3))
-      .body("tags", hasItems("a", "b", "c"));
+        .accept("application/json")
+        .contentType("application/json")
+        .when()
+        .put("/tags/{id}", id)
+        .then()
+        .statusCode(200)
+        .body("tags", hasSize(3))
+        .body("tags", hasItems("a", "b", "c"));
 
     var found = entityManager.find(TagCollection.class, id);
     assertThat(found).isNotNull();
   }
 
   private List<Tag> sampleTags(String... tags) {
-    return Arrays.stream(tags)
-      .map(Tag::new)
-      .toList();
+    return Arrays.stream(tags).map(Tag::new).toList();
   }
 }

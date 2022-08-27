@@ -5,13 +5,9 @@ import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.authority.mapping.SimpleAuthorityMapper;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.session.NullAuthenticatedSessionStrategy;
-import org.springframework.security.web.authentication.session.SessionAuthenticationStrategy;
 import org.springframework.web.cors.CorsConfiguration;
 
 @Configuration
@@ -36,31 +32,31 @@ class SecurityConfig {
     corsConfiguration.setAllowedMethods(List.of("*"));
 
     http.cors()
-      .configurationSource(request -> corsConfiguration)
-      .and()
-      .csrf()
-      .disable()
-      .oauth2ResourceServer(
-        oauth2 -> oauth2.jwt().jwtAuthenticationConverter(jwtAuthenticationConverter()))
-      .authorizeHttpRequests(
-        registry ->
-          registry
-            .mvcMatchers(HttpMethod.GET, SWAGGER_PATHS)
-            .permitAll()
-            .mvcMatchers(HttpMethod.HEAD, SWAGGER_PATHS)
-            .permitAll()
-            .mvcMatchers(HttpMethod.OPTIONS, SWAGGER_PATHS)
-            .permitAll()
-            .mvcMatchers(HttpMethod.GET, "/tags/**")
-            .permitAll()
-            .mvcMatchers(HttpMethod.HEAD, "/tags/**")
-            .permitAll()
-            .mvcMatchers(HttpMethod.OPTIONS, "/tags/**")
-            .permitAll()
-            .mvcMatchers("/tags/**")
-            .hasRole("professor")
-            .anyRequest()
-            .denyAll());
+        .configurationSource(request -> corsConfiguration)
+        .and()
+        .csrf()
+        .disable()
+        .oauth2ResourceServer(
+            oauth2 -> oauth2.jwt().jwtAuthenticationConverter(jwtAuthenticationConverter()))
+        .authorizeHttpRequests(
+            registry ->
+                registry
+                    .mvcMatchers(HttpMethod.GET, SWAGGER_PATHS)
+                    .permitAll()
+                    .mvcMatchers(HttpMethod.HEAD, SWAGGER_PATHS)
+                    .permitAll()
+                    .mvcMatchers(HttpMethod.OPTIONS, SWAGGER_PATHS)
+                    .permitAll()
+                    .mvcMatchers(HttpMethod.GET, "/tags/**")
+                    .permitAll()
+                    .mvcMatchers(HttpMethod.HEAD, "/tags/**")
+                    .permitAll()
+                    .mvcMatchers(HttpMethod.OPTIONS, "/tags/**")
+                    .permitAll()
+                    .mvcMatchers("/tags/**")
+                    .hasRole("professor")
+                    .anyRequest()
+                    .denyAll());
 
     return http.build();
   }

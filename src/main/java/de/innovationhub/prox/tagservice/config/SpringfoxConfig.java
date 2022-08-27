@@ -3,14 +3,9 @@ package de.innovationhub.prox.tagservice.config;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
-import java.util.function.Predicate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.web.bind.annotation.RequestMethod;
-import springfox.documentation.RequestHandler;
-import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.service.AuthorizationScope;
 import springfox.documentation.service.HttpAuthenticationScheme;
 import springfox.documentation.service.SecurityReference;

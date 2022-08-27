@@ -10,22 +10,19 @@ import java.util.stream.IntStream;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
 @ActiveProfiles("h2")
 class TagPopularityTest {
 
-  @Autowired
-  TagCollectionRepository tagCollectionRepository;
+  @Autowired TagCollectionRepository tagCollectionRepository;
 
   @Test
   void shouldReturnEmptyMap() {
     var popularTags = tagCollectionRepository.findPopularTags(10);
 
-    assertThat(popularTags)
-      .isEmpty();
+    assertThat(popularTags).isEmpty();
   }
 
   @Test
@@ -36,10 +33,10 @@ class TagPopularityTest {
     var tagCollection2 = new TagCollection(UUID.randomUUID());
     var tagCollection3 = new TagCollection(UUID.randomUUID());
 
-    var first =  sampleTags.get(0);
-    var second =  sampleTags.get(1);
-    var third =  sampleTags.get(2);
-    var fourth =  sampleTags.get(3);
+    var first = sampleTags.get(0);
+    var second = sampleTags.get(1);
+    var third = sampleTags.get(2);
+    var fourth = sampleTags.get(3);
 
     // This will be the search tags
     tagCollection1.setTags(Set.of(first, third, fourth));
@@ -53,17 +50,14 @@ class TagPopularityTest {
     var popularTags = tagCollectionRepository.findPopularTags(10);
 
     assertThat(popularTags)
-      .containsOnly(
-        entry(first.getTag(), 1),
-        entry(second.getTag(), 2),
-        entry(third.getTag(), 3),
-        entry(fourth.getTag(), 3)
-      );
+        .containsOnly(
+            entry(first.getTag(), 1),
+            entry(second.getTag(), 2),
+            entry(third.getTag(), 3),
+            entry(fourth.getTag(), 3));
   }
 
   private List<Tag> sampleTags(int count) {
-    return IntStream.range(0, count)
-        .mapToObj(i -> new Tag("Tag_" + i))
-        .toList();
+    return IntStream.range(0, count).mapToObj(i -> new Tag("Tag_" + i)).toList();
   }
 }

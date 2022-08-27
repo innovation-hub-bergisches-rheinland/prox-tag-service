@@ -18,17 +18,23 @@ public class TagCollectionRepositoryExtensionImpl implements TagCollectionReposi
 
   @Override
   public Map<String, Integer> findPopularTags(Integer size) {
-    var query = entityManager.createQuery("""
+    var query =
+        entityManager.createQuery(
+            """
         select t.tag as tag, count(t) as cnt
           from TagCollection tc
           join tc.tags t
           group by t.tag
           order by cnt desc
-        """, Tuple.class);
+        """,
+            Tuple.class);
     query.setMaxResults(size);
 
     return query
-      .getResultStream()
-      .collect(Collectors.toMap(tuple -> (String) tuple.get("tag"), tuple -> ((Number) tuple.get("cnt")).intValue()));
+        .getResultStream()
+        .collect(
+            Collectors.toMap(
+                tuple -> (String) tuple.get("tag"),
+                tuple -> ((Number) tuple.get("cnt")).intValue()));
   }
 }

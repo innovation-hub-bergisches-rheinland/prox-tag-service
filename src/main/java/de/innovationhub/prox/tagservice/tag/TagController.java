@@ -1,5 +1,6 @@
 package de.innovationhub.prox.tagservice.tag;
 
+
 import de.innovationhub.prox.tagservice.tag.dto.ReadTagPopularityDto;
 import de.innovationhub.prox.tagservice.tag.dto.ReadTagRecommendationDto;
 import de.innovationhub.prox.tagservice.tag.dto.ReadTagsDto;
@@ -25,7 +26,8 @@ public class TagController {
   }
 
   @PutMapping(value = "/tags/{id}", consumes = "application/json", produces = "application/json")
-  public ResponseEntity<ReadTagsDto> addTags(@PathVariable UUID id, @RequestBody UpdateTagsDto updateTagsDto) {
+  public ResponseEntity<ReadTagsDto> addTags(
+      @PathVariable UUID id, @RequestBody UpdateTagsDto updateTagsDto) {
     tagCollectionService.addTags(id, updateTagsDto);
 
     var newTags = tagCollectionService.getTags(id);
@@ -40,23 +42,23 @@ public class TagController {
 
   @GetMapping(value = "/tags/search", produces = "application/json")
   public ResponseEntity<ReadTagsDto> getPopularTags(@RequestParam(value = "q") String query) {
-    if(query == null || query.isBlank()) {
+    if (query == null || query.isBlank()) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Query is required");
     }
     return ResponseEntity.ok(tagCollectionService.searchTags(query));
   }
 
   @GetMapping(value = "/tags/popular", produces = "application/json")
-  public ResponseEntity<ReadTagPopularityDto> getPopularTags(@RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
+  public ResponseEntity<ReadTagPopularityDto> getPopularTags(
+      @RequestParam(value = "size", required = false, defaultValue = "10") Integer size) {
     return ResponseEntity.ok(tagCollectionService.findPopularTags(size));
   }
 
   @GetMapping(value = "/tags/recommendations", produces = "application/json")
-  public ResponseEntity<ReadTagRecommendationDto> getPopularTags(@RequestParam("tags") Set<String> tags) {
-    if(tags.isEmpty()) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-        "Tags are required"
-      );
+  public ResponseEntity<ReadTagRecommendationDto> getPopularTags(
+      @RequestParam("tags") Set<String> tags) {
+    if (tags.isEmpty()) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Tags are required");
     }
     return ResponseEntity.ok(tagCollectionService.findRecommendedTags(tags));
   }
