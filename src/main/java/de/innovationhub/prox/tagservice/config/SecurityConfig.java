@@ -54,7 +54,8 @@ class SecurityConfig {
                     .mvcMatchers(HttpMethod.OPTIONS, "/tags/**")
                     .permitAll()
                     .mvcMatchers("/tags/**")
-                    .hasRole("professor")
+                    // TODO
+                    .authenticated()
                     .anyRequest()
                     .denyAll());
 
