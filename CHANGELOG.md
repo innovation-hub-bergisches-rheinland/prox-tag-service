@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v3.0.0...v3.1.0) (2022-08-29)
+
+
+### Features
+
+* use zstd compression ([1396e6f](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/commit/1396e6ff8179925779207209a9ae2e1641e9472d))
+
 ## [3.0.0](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v2.0.2...v3.0.0) (2022-08-29)
 
 
