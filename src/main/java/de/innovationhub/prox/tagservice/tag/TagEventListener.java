@@ -1,9 +1,8 @@
 package de.innovationhub.prox.tagservice.tag;
 
 
-import com.google.protobuf.Message;
 import de.innovationhub.prox.tagservice.tag.events.TagsAdded;
-import de.innovationhub.prox.tagservice.tags.events.dto.TagsAddedDto;
+import de.innovationhub.prox.tagservice.tag.events.dto.TagsAddedDto;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -19,24 +18,20 @@ import org.springframework.transaction.event.TransactionalEventListener;
 public class TagEventListener {
   private static final String ADDED_TOPIC = "event.tags.added";
 
-  private final KafkaTemplate<String, Message> kafkaTemplate;
+  private final KafkaTemplate<String, TagsAddedDto> kafkaTemplate;
 
-  public TagEventListener(KafkaTemplate<String, Message> kafkaTemplate) {
+  public TagEventListener(KafkaTemplate<String, TagsAddedDto> kafkaTemplate) {
     this.kafkaTemplate = kafkaTemplate;
   }
 
   @TransactionalEventListener(
       phase = org.springframework.transaction.event.TransactionPhase.AFTER_COMMIT)
   public void onTagsAdded(TagsAdded event) {
-    var eventDto =
-        TagsAddedDto.newBuilder()
-            .addAllTags(event.tags().stream().map(Tag::getTag).collect(Collectors.toSet()))
-            .setId(event.referencedEntity().toString())
-            .build();
-
-    var record =
-        new ProducerRecord<String, Message>(
-            ADDED_TOPIC, event.referencedEntity().toString(), eventDto);
+    final var dto = new TagsAddedDto(event.referencedEntity(), event.tags().stream().map(Tag::getTag).collect(
+      Collectors.toSet()));
+    final var record =
+        new ProducerRecord<>(
+            ADDED_TOPIC, event.referencedEntity().toString(), dto);
     var future = kafkaTemplate.send(record);
 
     try {

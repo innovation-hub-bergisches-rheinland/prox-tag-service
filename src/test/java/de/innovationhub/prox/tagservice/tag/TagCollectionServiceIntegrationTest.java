@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.dockerjava.api.command.InspectContainerResponse;
 import de.innovationhub.prox.tagservice.tag.dto.UpdateTagsDto;
-import de.innovationhub.prox.tagservice.tags.events.dto.TagsAddedDto;
+import de.innovationhub.prox.tagservice.tag.events.dto.TagsAddedDto;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
 import java.util.UUID;
@@ -44,10 +44,6 @@ class TagCollectionServiceIntegrationTest {
   @DynamicPropertySource
   static void setupKafkaProperties(DynamicPropertyRegistry registry) {
     registry.add("spring.kafka.bootstrap-servers", REDPANDA_CONTAINER::getBootstrapServers);
-    registry.add(
-        "spring.kafka.properties.\"schema.registry.url\"",
-        REDPANDA_CONTAINER::getSchemaRegistryUrl);
-    registry.add("spring.kafka.properties.\"derive.type\"", () -> "true");
     registry.add("spring.kafka.consumer.auto-offset-reset", () -> "earliest");
   }
 
@@ -137,7 +133,7 @@ class TagCollectionServiceIntegrationTest {
         .satisfies(
             r -> {
               assertThat(r.key()).isEqualTo(id.toString());
-              assertThat(r.value().getTagsList()).containsExactlyInAnyOrder("a", "b", "c");
+              assertThat(r.value().tags()).containsExactlyInAnyOrder("a", "b", "c");
             });
   }
 }
