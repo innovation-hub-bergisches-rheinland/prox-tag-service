@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.github.dockerjava.api.command.InspectContainerResponse;
 import de.innovationhub.prox.tagservice.tag.dto.UpdateTagsDto;
-import de.innovationhub.prox.tagservice.tag.events.dto.TagsAddedDto;
+import de.innovationhub.prox.tagservice.tag.events.dto.ItemTaggedDto;
 import java.nio.charset.StandardCharsets;
 import java.util.Set;
 import java.util.UUID;
@@ -33,7 +33,7 @@ class TagCollectionServiceIntegrationTest {
 
   @Autowired private TagCollectionService tagCollectionService;
 
-  static final String ADDED_TOPIC = "event.tags.added";
+  static final String ADDED_TOPIC = "event.item.tagged";
   static RedpandaContainer REDPANDA_CONTAINER =
       new RedpandaContainer("docker.redpanda.com/vectorized/redpanda:v22.2.2");
 
@@ -115,10 +115,10 @@ class TagCollectionServiceIntegrationTest {
     }
   }
 
-  BlockingQueue<ConsumerRecord<String, TagsAddedDto>> addedQueue = new LinkedBlockingQueue<>();
+  BlockingQueue<ConsumerRecord<String, ItemTaggedDto>> addedQueue = new LinkedBlockingQueue<>();
 
   @KafkaListener(topics = ADDED_TOPIC)
-  void tagAddedListener(ConsumerRecord<String, TagsAddedDto> record) {
+  void tagAddedListener(ConsumerRecord<String, ItemTaggedDto> record) {
     this.addedQueue.add(record);
   }
 

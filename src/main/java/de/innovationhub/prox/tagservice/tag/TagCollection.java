@@ -1,7 +1,7 @@
 package de.innovationhub.prox.tagservice.tag;
 
 
-import de.innovationhub.prox.tagservice.tag.events.TagsAdded;
+import de.innovationhub.prox.tagservice.tag.events.ItemTagged;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
@@ -38,7 +38,7 @@ public class TagCollection extends AbstractAggregateRoot<TagCollection> {
     Objects.requireNonNull(tags);
 
     this.tags = new HashSet<>(tags);
-    registerEvent(new TagsAdded(this.referencedEntity, this.tags));
+    registerEvent(new ItemTagged(this.referencedEntity, this.tags));
   }
 
   public Set<Tag> getTags() {
