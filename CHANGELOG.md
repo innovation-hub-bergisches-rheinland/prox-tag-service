@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v3.1.1...v3.2.0) (2022-09-10)
+
+
+### Features
+
+* update proposal tags when promoted ([53fee56](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/commit/53fee56735558d8714d0430c13830a8207334291))
+
 ### [3.1.1](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v3.1.0...v3.1.1) (2022-08-29)
 
 
