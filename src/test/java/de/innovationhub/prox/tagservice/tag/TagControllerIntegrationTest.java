@@ -19,6 +19,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
@@ -29,6 +31,19 @@ class TagControllerIntegrationTest {
   @Autowired MockMvc mockMvc;
 
   @Autowired EntityManager entityManager;
+
+  static RedPandaContainer REDPANDA_CONTAINER =
+    new RedPandaContainer("docker.redpanda.com/vectorized/redpanda:v22.2.2");
+
+  static {
+    REDPANDA_CONTAINER.start();
+  }
+
+  @DynamicPropertySource
+  static void setupKafkaProperties(DynamicPropertyRegistry registry) {
+    registry.add("spring.kafka.bootstrap-servers", REDPANDA_CONTAINER::getBootstrapServers);
+    registry.add("spring.kafka.consumer.auto-offset-reset", () -> "earliest");
+  }
 
   @BeforeEach
   void setup() {
