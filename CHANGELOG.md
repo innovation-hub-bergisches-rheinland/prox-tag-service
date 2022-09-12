@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.2](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v3.2.1...v3.2.2) (2022-09-12)
+
+
+### Bug Fixes
+
+* run event listener in transaction ([51072b0](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/commit/51072b00091ccab66aa6a8e8b3d0a538494dcb70))
+* update config ([c40b84a](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/commit/c40b84ab428561158297de6b6b83130dc7075ebb))
+
 ### [3.2.1](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v3.2.0...v3.2.1) (2022-09-12)
 
 
