@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.2.1](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v3.2.0...v3.2.1) (2022-09-12)
+
+
+### Bug Fixes
+
+* programmatic deserialization of proposal-promoted event ([b1ff422](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/commit/b1ff422c780faf8fed3b5265c435f9c5bd076dba))
+
 ## [3.2.0](https://github.com/innovation-hub-bergisches-rheinland/prox-tag-service/compare/v3.1.1...v3.2.0) (2022-09-10)
 
 
