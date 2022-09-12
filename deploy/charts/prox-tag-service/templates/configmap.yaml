@@ -19,11 +19,13 @@ data:
           key-serializer: org.apache.kafka.common.serialization.StringSerializer
           value-serializer: io.confluent.kafka.serializers.protobuf.KafkaProtobufSerializer
         consumer:
-          key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-          value-deserializer: io.confluent.kafka.serializers.protobuf.KafkaProtobufDeserializer
+          key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+          value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
           group-id: tag-service
         properties:
-          "schema.registry.url": http://redpanda-cluster:8081
+          "spring.json.trusted.packages": "*"
+          "spring.deserializer.value.delegate.class": org.apache.kafka.common.serialization.StringDeserializer
+          "spring.deserializer.key.delegate.class": org.apache.kafka.common.serialization.StringDeserializer
       datasource:
         password: tag-service
         url: jdbc:postgresql://tag-db:5432/tag-db

@@ -13,7 +13,7 @@ spring:
     consumer:
       key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
       value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-      group-id: project-service
+      group-id: tag-service
     properties:
       "spring.json.trusted.packages": "*"
       "spring.deserializer.value.delegate.class": org.apache.kafka.common.serialization.StringDeserializer
