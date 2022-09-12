@@ -1,12 +1,14 @@
 package de.innovationhub.prox.tagservice.tag;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.innovationhub.prox.tagservice.tag.dto.UpdateTagsDto;
 import de.innovationhub.prox.tagservice.tag.events.dto.ProposalPromotedToProject;
+import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Component;
 
 /**
@@ -19,16 +21,28 @@ public class ProposalPromotedEventListener {
 
   private final TagCollectionService tagCollectionService;
   private final TagCollectionRepository tagCollectionRepository;
+  private final ObjectMapper objectMapper;
 
   public ProposalPromotedEventListener(TagCollectionService tagCollectionService,
-    TagCollectionRepository tagCollectionRepository) {
+    TagCollectionRepository tagCollectionRepository, ObjectMapper objectMapper) {
     this.tagCollectionService = tagCollectionService;
     this.tagCollectionRepository = tagCollectionRepository;
+    this.objectMapper = objectMapper;
   }
 
 
   @KafkaListener(topics = PROPOSAL_PROMOTED_TO_PROJECT)
-  public void onTagsAdded(@Payload ProposalPromotedToProject event) {
+  public void onProposalPromoted(ConsumerRecord<String, String> record) {
+    var value = record.value();
+
+    ProposalPromotedToProject event;
+    try {
+      event = objectMapper.readValue(value, ProposalPromotedToProject.class);
+    } catch (Exception e) {
+      log.error("Could not parse event", e);
+      return;
+    }
+
     var optionalTagCollection = tagCollectionRepository.findById(event.proposalId());
     if(optionalTagCollection.isEmpty()) {
       return;
