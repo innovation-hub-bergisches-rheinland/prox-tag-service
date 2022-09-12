@@ -6,6 +6,7 @@ import de.innovationhub.prox.tagservice.tag.dto.UpdateTagsDto;
 import de.innovationhub.prox.tagservice.tag.events.dto.ProposalPromotedToProject;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -32,6 +33,7 @@ public class ProposalPromotedEventListener {
 
 
   @KafkaListener(topics = PROPOSAL_PROMOTED_TO_PROJECT)
+  @Transactional
   public void onProposalPromoted(ConsumerRecord<String, String> record) {
     var value = record.value();
 
