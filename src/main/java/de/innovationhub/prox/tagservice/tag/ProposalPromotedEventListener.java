@@ -55,6 +55,8 @@ public class ProposalPromotedEventListener {
     this.tagCollectionService.addTags(event.projectId(), new UpdateTagsDto(tc.getTags().stream().map(Tag::getTag).collect(
       Collectors.toSet())));
 
-    tagCollectionRepository.delete(tc);
+    // We don't delete the old tag collection as the proposal might be restored at a later point.
+    // TODO: We might need to mark the old collection as "stale"/"inactive" or something like this
+    //  to have a better recommendation system
   }
 }
